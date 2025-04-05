@@ -80,9 +80,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME':'NeuroReconDB',
-        'USER' :'NeuroReconUser',
-        'PASSWORD':'NeuroReconPW',
-        'HOST':'neurorecondb.c3mio28ykxd1.eu-north-1.rds.amazonaws.com'
+        'USER' :'Neuroadmin',
+        'PASSWORD':'Neuroadmin',
+        'HOST':'neurorecondb-id.c3mio28ykxd1.eu-north-1.rds.amazonaws.com',
+        'PORT':'5432'
     }
 }
 
