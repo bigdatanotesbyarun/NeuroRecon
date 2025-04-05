@@ -1,0 +1,37 @@
+   main {
+        margin-top: 80px; /* Prevents overlap with fixed header */
+        padding: 20px;
+        text-align: center;
+    }
+    *{
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      margin-top:50px;
+    
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Arial', sans-serif;
+    }
+    
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(135deg, #1f4037, #99f2c8);
+    }
+      
+    button {
+    width: 90px;
+    height: 35px;
+    border-radius: 10px;
+    }             

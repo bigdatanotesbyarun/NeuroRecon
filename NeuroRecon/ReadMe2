@@ -1,0 +1,45 @@
+Install Python 3.7.3 
+python --version
+pip    --version
+pip install virtualenvwrapper-win    		[Run this in CMD at your Main Project Dir F:\ReconProjects]
+mkvirtualenv NeuroReconEnv  
+mkvirtualenv telusko          		[Run this in CMD at your Main Project Dir F:\ReconProjects]
+pip install django					 		[Run this in CMD at your Main Project Dir F:\ReconProjects]
+django-admin --version                		2.2
+django-admin startproject NeuroRecon
+python manage.py  runserver                 [Go to F:\ReconProjects\NeuroRecon & Run this CMD]
+http://127.0.0.1:8000/                      [Server Started Now]
+Download VCS FreeVersion
+Open the VCS go to file and Open folder Select NeuroRecon then It will import your Project in to VCS
+Go to terminal and cd to F:\ReconProjects\NeuroRecon and enter below CMD in this Path F:\ReconProjects\NeuroRecon
+workon NeuroReconEnv
+python manage.py startapp  NeuroReconUI
+
+python.exe -m pip install --upgrade pip  
+Update Python here and Set the Path as below and restart the VCS and set Path in ENV User Variable as well
+set PYSPARK_PYTHON=C:\Users\Lenovo\Envs\telusko\Scripts\python.exe
+set PYSPARK_DRIVER_PYTHON=C:\Users\Lenovo\Envs\telusko\Scripts\python.exe
+
+pip install djangorestframework
+pip install psycopg2
+pip install requests
+pip install -U google-generativeai
+pip install -U langchain-google-genai
+pip install --upgrade langchain
+pip install -U langchain-community faiss-cpu  
+pip install pypdf
+pip install pyspark
+pip install requests
+ 
+pip uninstall urllib3
+pip install urllib3==1.26.6
+pip install pyspark
+SetBelow Path in ENV Varible
+PYSPARK_PYTHON=C:\Users\Lenovo\Envs\telusko\Scripts\python.exe
+PYSPARK_DRIVER_PYTHON=C:\Users\Lenovo\Envs\telusko\Scripts\python.exe
+Path of Local-C:\Users\Lenovo\AppData\Local\Programs\Python\Python313
+git push -u origin main
+git add . *.*
+git commit -m "Commited"
+
+

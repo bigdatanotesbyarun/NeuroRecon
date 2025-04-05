@@ -1,0 +1,9 @@
+python manage.py makemigrations
+python manage.py sqlmigrate 0030_remove_greenzonevo2_enddate_and_more
+python manage.py migrate
+pip install djangorestframework
+pip install psycopg2
+pip install --user google-generativeai
+python manage.py startapp base
+python manage.py runserver 
+activate 

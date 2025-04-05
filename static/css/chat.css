@@ -1,0 +1,126 @@
+/* Chat Container */
+.chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 575px;
+    height: 525px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    }
+
+    /* Chat Header */
+    .chat-header {
+    background: #007bff;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    }
+
+    /* Close Button */
+    .close-btn1 {
+    background: red;
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0; /* Ensuring square shape */
+    }
+
+    /* Chat Body */
+    .chat-body {
+    flex-grow: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Space between messages */
+    }
+
+    /* User & Bot Messages */
+    .user-message, .bot-message {
+    padding: 10px 14px;
+    border-radius: 12px;
+    max-width: 70%;
+    font-size: 14px;
+    display: inline-block; /* Ensures background wraps only around text */
+    word-wrap: break-word; /* Prevents text overflow */
+    animation: fadeIn 0.3s ease-in-out;
+    clear: both; /* Prevents overlapping */
+    }
+
+    /* User Message (Right-Aligned) */
+    .user-message {
+    background-color: #0056b3;
+    color: white;
+    align-self: flex-end;
+    }
+
+    /* Bot Message (Left-Aligned) */
+    .bot-message {
+    background-color: #007bff;
+    color: white;
+    align-self: flex-start;
+    }
+
+    /* Chat Footer */
+    .chat-footer {
+    padding: 10px;
+    background: white;
+    border-top: 1px solid #ccc;
+    display: flex;
+    }
+
+    /* Input Field */
+    .chat-footer input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    }
+
+    /* Send Button */
+    .chat-footer button {
+    background: #007bff;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+    }
+
+    /* Typing Animation */
+    @keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    }
+
+    

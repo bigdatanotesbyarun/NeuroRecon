@@ -1,0 +1,42 @@
+/* Hide chart container initially */
+#chartContainer {
+    display: block; /* Ensure the container is visible */
+    width: 100%;
+    text-align: center;
+}
+
+/* Layout: Two charts per row (inside the table) */
+.chart-wrapper0, .chart-wrapper0 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+   
+}
+
+.chart-wrapper1, .chart-wrapper1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+   
+}
+
+/* Chart Box Styling */
+.chart-box {
+    width: 45%;
+    height: 250px;
+    background: #e9ecef;
+    padding: 4px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Chart Titles */
+.chart-title {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 2px;
+    color: #333333;
+}

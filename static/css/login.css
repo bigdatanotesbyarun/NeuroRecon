@@ -1,0 +1,80 @@
+/* General reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Background image for the body */
+body {
+    background-image: url('/static/css/A.png'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Container for centering login window */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent overlay for contrast */
+}
+
+/* Transparent login form window */
+.login-form {
+    background-color: rgba(255, 255, 255, 0.9); /* Lighter, semi-transparent white */
+    padding: 25px;
+    border-radius: 8px;
+    width: 280px; /* Smaller width */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly softer shadow */
+    text-align: center;
+}
+
+/* Form title */
+.login-form .form-title {
+    font-size: 18px; /* Smaller font size */
+    margin-bottom: 20px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Input field styling */
+.login-form .input-field {
+    margin-bottom: 12px; /* Reduced margin */
+}
+
+.login-form .input-field label {
+    display: block;
+    font-size: 14px; /* Smaller label font size */
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.login-form .input-field .input {
+    width: 100%;
+    padding: 10px; /* Smaller padding */
+    font-size: 14px; /* Smaller input font size */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Button styling */
+.login-form .submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF; /* Changed to a contrasting blue */
+    color: white;
+    font-size: 14px; /* Smaller button font size */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-form .submit-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

@@ -1,0 +1,69 @@
+Best Artical to Fix Python3 Issue
+The error message you're encountering indicates that Spark is attempting to execute python3, but it cannot locate the python3 executable on your system. This issue is common on Windows systems, where the Python executable is typically named python.exe rather than python3.exe.​
+
+Solution: Configure Spark to Use the Correct Python Executable
+
+To resolve this issue, you need to explicitly tell Spark which Python executable to use by setting the PYSPARK_PYTHON and PYSPARK_DRIVER_PYTHON environment variables. Here's how you can do it:​
+
+Determine the Path to Your Python Executable:
+
+Locate the full path to your Python executable. If you're using a virtual environment, ensure you're pointing to the Python executable within that environment. For example:
+
+makefile
+Copy
+Edit
+C:\Users\Lenovo\Envs\telusko\Scripts\python.exe
+Set Environment Variables:
+You can set the environment variables in your command prompt before launching your Spark application:
+cmd
+Copy
+Edit
+set PYSPARK_PYTHON=C:\Users\Lenovo\Envs\telusko\Scripts\python.exe
+set PYSPARK_DRIVER_PYTHON=C:\Users\Lenovo\Envs\telusko\Scripts\python.exe
+Alternatively, you can set these environment variables system-wide through the System Properties dialog:
+
+Right-click on 'This PC' or 'Computer' on your desktop or in File Explorer.​
+
+Select 'Properties'.​
+GitHub
++6
+GitHub
++6
+Google Groups
++6
+
+Click on 'Advanced system settings'.​
+GitHub
++6
+IntelliJ Support
++6
+YouTrack
++6
+
+In the System Properties window, click on the 'Environment Variables...' button.​
+
+In the Environment Variables window, click 'New...' under 'User variables' or 'System variables' as appropriate.​
+
+Enter PYSPARK_PYTHON as the variable name and the path to your Python executable as the variable value.​
+
+Repeat the above step to set PYSPARK_DRIVER_PYTHON with the same value.​
+
+Verify the Configuration:
+
+After setting the environment variables, restart your command prompt or terminal to ensure the changes take effect. Then, try running your Spark application again.
+
+Additional Considerations:
+
+Ensure Python is Installed:
+
+Make sure that Python is installed on your system and that the path you've specified points to a valid Python executable.
+
+Consistency Across Environments:
+
+If you're using an Integrated Development Environment (IDE) like PyCharm or Visual Studio Code, ensure that the IDE is configured to use the same Python interpreter as specified in the PYSPARK_PYTHON and PYSPARK_DRIVER_PYTHON variables.
+
+Check for python3.exe:
+
+Some Python installations on Windows include both python.exe and python3.exe. If python3.exe exists, you can add its directory to your system's PATH environment variable, allowing Spark to locate it without additional configuration.
+
+By explicitly setting the PYSPARK_PYTHON and PYSPARK_DRIVER_PYTHON environment variables to point to your Python executable, you should be able to resolve the java.io.IOException: Cannot run program "python3" error and run your Spark application successfully.

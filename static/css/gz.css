@@ -1,0 +1,113 @@
+#gzrecon {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+#gzDatarecon {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#gzDatarecon th, #gzDatarecon td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#gzDatarecon th {
+    background-color: #2c3e50;
+    color: white;
+    font-size: 13px;
+}
+
+#gzDatarecon tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+#gzDatarecon td {
+    color: #333;
+    font-size: 12px;
+}
+
+/* Responsive Design for Data Table */
+@media (max-width: 768px) {
+    #gzDatarecon th, #gzDatarecon td {
+        padding: 8px;
+        font-size: 12px;
+    }
+}
+    
+    
+    
+    
+      .main-content {
+            padding: 12px;
+        }
+        #gzrecon {
+            margin-top: 1px;
+        }
+        
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            background: linear-gradient(to right, #2c3e50, #3498db);
+            color: white;
+            justify-content: flex-start;
+            align-items: stretch;
+            overflow-x: hidden; /* Prevents horizontal scrolling */
+        }
+
+        
+        
+        /* Main content */
+        .main-content {
+            margin-left: 250px; /* Ensure content is aligned next to the sidebar */
+            padding: 20px;
+            width: calc(100% - 250px); /* Ensure content fills the remaining space next to the sidebar */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            overflow-x: hidden; /* Prevents horizontal scroll */
+        }
+
+        /* Ensure export buttons inside gzrecon are properly styled */
+#gzrecon .dt-buttons .btn-export {
+    background-color: #2c3e50 !important; /* Dark blue */
+    color: white !important; /* White text */
+    border: none !important;
+    padding: 8px 14px; /* Adjust padding for better text visibility */
+    font-size: 14px !important; /* Ensure readable font size */
+    font-weight: bold; /* Make text stand out */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: inline-block; /* Ensure proper button size */
+    min-width: 120px; /* Ensure button is wide enough for text */
+    text-align: center;
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+/* Fix issue where text is not visible */
+#gzrecon .dt-buttons .btn-export span {
+    display: inline-block !important;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* Hover effect */
+#gzrecon .dt-buttons .btn-export:hover {
+    background-color: #1a252f !important;
+}

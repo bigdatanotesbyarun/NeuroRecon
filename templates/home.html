@@ -1,0 +1,706 @@
+{% load static %}
+{% csrf_token %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8">
+        <title>Reconciliation</title>
+        <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' >
+        
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+        
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"> 
+        <link rel="stylesheet" type="text/css" href="{% static 'css/ack.css' %}"> 
+        <link rel="stylesheet" type="text/css" href="{% static 'css/chart.css' %}"> 
+        <link rel="stylesheet" type="text/css" href="{% static 'css/chat.css' %}"> 
+        <link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}"> 
+        <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}"> 
+        <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}"> 
+        <link rel="stylesheet" type="text/css" href="{% static 'css/tabledata.css' %}">  
+        <link rel="stylesheet" type="text/css" href="{% static 'css/tabledata2.css' %}"> 
+        <link rel="stylesheet" type="text/css" href="{% static 'css/skrecon.css' %}"> 
+        <link rel="stylesheet" type="text/css" href="{% static 'css/countrecon.css' %}"> 
+        <link rel="stylesheet" type="text/css" href="{% static 'css/gz.css' %}"> 
+        <link rel="stylesheet" type="text/css" href="{% static 'css/jobs.css' %}"> 
+         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+
+
+
+        <!-- ✅ Load jQuery First -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <!-- ✅ Load DataTables After jQuery -->
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
+
+        <!-- ✅ Load Other Required Libraries -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+
+
+        <script src ="{% static 'js/script.js'%}"> </script>
+       
+</head>
+
+<script>
+    window.onload = function() {
+       hideElements("hide") // Ensure textarea is editable
+   };
+ </script>
+
+<header class="main-header">
+    <div class="header-content" style="font-weight: 100;">RefData NeuralRecon</div>
+  
+    <div class="header-content">
+        <nav class="nav-links">
+            {% for headerPanel in headerPanelList %}
+              
+                
+                    {% if headerPanel.eventType == "C" %}
+                        <a href="javascript:void(0)" onclick="openForm('{{headerPanel.formName}}')">{{headerPanel.name}}</a>
+                    {% elif  headerPanel.eventType == "Function" %}
+                        <a href="javascript:void(0)" onclick={{headerPanel.idV}}>{{headerPanel.name}}</a>
+                    {% elif  headerPanel.eventType == "L" %}
+                        <a href="{% url 'logout' %}" id={{headerPanel.idV}}>{{headerPanel.name}}</a>
+                    {% else %}
+                        <a href="#" id={{headerPanel.idV}}>{{headerPanel.name}}</a> 
+                    {% endif %}
+                {% endfor %}
+           
+        </nav>
+    </div>
+</header>
+
+<body>
+	<div class="sidebar">
+		<!--
+        <div class="logo_content">
+                <div  class="logo"><i class='bx bxs-analyse'></i>
+                    <div  class="logo_name">AI Reconciliation </div>
+                </div> 
+        </div>
+        -->	
+            {% for sidebar in sideBarList %}
+                    {% if sidebar.eventType == "C" %}
+                        <a href="javascript:void(0)" onclick="openForm('{{sidebar.formName}}')">{{sidebar.name}}</a>
+                    {% elif  sidebar.eventType == "Function" %}
+                        <a href="javascript:void(0)" onclick={{sidebar.idV}}>{{sidebar.name}}</a>
+                    {% else %}
+                        <a href="#" id={{sidebar.idV}}>{{sidebar.name}}</a>
+                    {% endif %}
+			{% endfor %}
+	</div>
+	
+	<div class="main-content">
+            
+            
+        <div id="chartContainer" class="hide">
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="width: 50%; vertical-align: top;">
+                        <div class="chart-wrapper0">
+                            {% for chart in chartPanelList %}
+                                <div class="chart-box">
+                                    <div class="chart-title">{{chart.name}}</div>
+                                    <canvas id="{{chart.idV}}" ></canvas>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td style="width: 50%; vertical-align: top;">
+                        <div class="chart-wrapper1">
+                            {% for chartcob in chartPanelListcob %}
+                                <div class="chart-box">
+                                    <div class="chart-title">{{chartcob.name}}</div>
+                                    <canvas id="{{chartcob.idV}}"></canvas>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+            
+            <div id="chat-container" class="chat-container hide">
+                <div class="chat-header">
+                    <span>RefData-ChatBoat</span>
+                    <button id="close-chat" class="close-btn1">✖</button>
+                </div>
+                <div id="chat-body" class="chat-body">
+                    <div class="bot-message">Hello! How can I assist you today? 😊</div>
+                </div>
+                <div class="chat-footer">
+                    <input type="text" id="chat-input" placeholder="Type a message...">
+                    <button id="send-message">➤</button>
+                </div>
+            </div>
+
+            
+            <div id="form1" class="form-container hide" style="display: none;">
+                <h1 style="color: #000000;">ReconDetails</h1>
+                <form id="formId1">
+                    <div class="form-fields">
+                        <div class="field-container">
+                            <label for="tblNameLbl">Entity</label>
+                            <select id="tblName" name="tblName">
+                                {% for tbl in tablelList %}
+                                    <option value={{ tbl.lebal }}>{{ tbl.lebal }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="field-container">
+                            <label for="pipelineLbl">Pipeline</label>
+                            <select id="pipeline" name="pipeline">
+                                {% for line in pipeLineList %}
+                                    <option value="{{ line.name }}">{{ line.lebal }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-fields">
+                        <div class="field-container">
+                            <label for="temporalLbl">Temporal</label>
+                            <select id="temporal" name="temporal">
+                                <option value="Type1" selected>Type1</option>
+                                <option value="Type2">Type2</option>
+                            </select>
+                        </div>
+                        
+                        <div class="field-container">
+                            <label for="onBoardingLbl">OnBoarding</label>
+                            <select id="onBoarding" name="onBoarding">
+                                <option value="DC" selected>DC</option>
+                                <option value="NRT">NRT</option>
+                                <option value="SF">SF</option>
+                            </select>
+                        </div>
+                    </div>
+            
+                    <div class="form-fields">
+                        <div class="field-container">
+                            <label for="batchLbl">Batch</label>
+                            <select id="batch" name="batch">
+                                <option value="EOD" selected>EOD</option>
+                                <option value="RT">RT</option>
+                            </select>
+                        </div>
+                        
+                        <div class="field-container">
+                            <label for="dateLbl">Business Date</label>
+                            <input type="text" id="date" name="date" placeholder="2025-01-31">
+                        </div>
+                    </div>
+
+                    <div class="form-fields">
+                        
+                        
+                        <div class="field-container">
+                            <label for="field1">Field1</label>
+                            <select id="field1" name="field1">
+                                <option value="Type1" selected>ABC</option>
+                                <option value="Type2">XYZ</option>
+                            </select>
+                        </div>
+                        <div class="field-container">
+                            <label for="field2">Field2</label>
+                            <select id="field2" name="field2">
+                                <option value="Type1" selected>ABC</option>
+                                <option value="Type2">XYZ</option>
+                            </select>
+                        </div>
+                        
+                        <div class="field-container">
+                            <label for="field3">Field3</label>
+                            <select id="field3" name="field3">
+                                <option value="Type1" selected>ABC</option>
+                                <option value="Type2">XYZ</option>
+                            </select>
+                        </div>
+                        <div class="field-container">
+                            <label for="field4">Field4</label>
+                            <select id="field4" name="field4">
+                                <option value="Type1" selected>ABC</option>
+                                <option value="Type2">XYZ</option>
+                            </select>
+                        </div>
+                        
+                        <div class="field-container">
+                            <label for="field5">Field5</label>
+                            <select id="field5" name="field5">
+                                <option value="Type1" selected>ABC</option>
+                                <option value="Type2">XYZ</option>
+                            </select>
+                        </div>
+
+                        <div class="field-container">
+                            <label for="field6">Field6</label>
+                            <select id="field6" name="field6">
+                                <option value="Type1" selected>ABC</option>
+                                <option value="Type2">XYZ</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+
+                    <div class="form-fields">
+                        <div class="field-container">
+                            <label for="startOffSet">Start Offset</label>
+                            <input type="text" id="startOffSet" name="startOffSet" placeholder="1:1000,2:1000,3:1000">
+                        </div>
+                        
+                        <div class="field-container">
+                            <label for="endOffSet">End Offset</label>
+                            <input type="text" id="endOffSet" name="endOffSet" placeholder="1:5000,2:5000,3:5000">
+                        </div>
+                    </div>
+            
+                    <div class="button-row">
+                        <button type="button" id="bt1">Submit</button>
+                        <button type="reset">Reset</button>
+                    </div>
+                </form>
+            </div>
+            
+       
+
+            <div id="form2" class="form-container hide" style="display: none;">
+                <h2 style="color: #000000;">SelfService</h2>
+                <form id="formId2">
+                    <div class="form-fields">
+                        <div class="field-container">
+                            <label for="tblNameLbl">Entity</label>
+                            <select id="tblName" name="tblName">
+                                {% for tbl in tablelList %}
+                                    <option value={{ tbl.lebal }}>{{ tbl.lebal }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="field-container">
+                            <label for="dateLbl">Env</label>
+                            <select id="tblName" name="tblName">
+                                 <option value="A">PROD</option>
+                                <option value="B">COB</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <h2>PayLoad:</h2>
+                            <textarea id="output2" readonly="false" rows="15" cols="100"></textarea>
+                        </div>
+
+                        <div class="button-row">
+                            <button type="button" id="bt2">Submit</button>
+                            <button type="reset">Reset</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <div id="form3" class="form-container hide" style="display: none;">
+                <h2 style="color: #000000;">KafkaClient</h2>
+                <form id="formId3">
+                    <div class="form-fields">
+                        <div class="field-container">
+                            <label for="tblNameLbl">Entity</label>
+                            <select id="tblName" name="tblName">
+                                {% for tbl in tablelList %}
+                                    <option value={{ tbl.lebal }}>{{ tbl.lebal }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="field-container">
+                            <label for="tblNameLbl">Topic</label>
+                            <select id="tblName" name="tblName">
+                                <option value="">Select...</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                            </select>
+                        </div>
+
+                        <div class="field-container">
+                            <label for="tblNameLbl">Env</label>
+                            <select id="tblName" name="tblName">
+                                <option value="A">Prod</option>
+                                <option value="B">Cob</option>
+                            </select>
+                        </div>
+                        
+                        <div class="field-container">
+                            <label for="dateLbl">OffSet</label>
+                            <input type="text" id="date" name="date">
+                        </div>
+                        <div>
+                            <h2>Output:</h2>
+                            <textarea id="output3" rows="15" cols="100" readonly></textarea>
+                        </div>
+
+                        <div class="button-row">
+                            <button type="button" id="bt3">Submit</button>
+                            <button type="reset">Reset</button>
+                        </div>
+
+                    </div>
+                </form>
+            
+                
+            </div>
+
+            <div id="form4" class="form-container hide" style="display: none;">
+                <h2 style="color: #000000;">GemfireClient</h2>
+                <form id="formId4">
+                    <div class="form-fields">
+                        <div class="field-container">
+                            <label for="tblNameLbl">Entity</label>
+                            <select id="tblName" name="tblName">
+                                {% for tbl in tablelList %}
+                                    <option value={{ tbl.lebal }}>{{ tbl.lebal }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="field-container">
+                            <label for="tblNameLbl">GemfireRegion</label>
+                            <select id="tblName" name="tblName">
+                                <option value="A">/olympus/account/acti</option>
+                                <option value="A">/olympus/account/mpid</option>
+                            </select>
+                        </div>
+
+                        <div class="field-container">
+                            <label for="tblNameLbl">Env</label>
+                            <select id="tblName" name="tblName">
+                                <option value="A">Prod</option>
+                                <option value="B">Cob</option>
+                            </select>
+                        </div>
+                        
+                        <div class="field-container">
+                            <label for="dateLbl">Key</label>
+                            <input type="text" id="date" name="date">
+                        </div>
+                        <div>
+                            <h2>Output:</h2>
+                            <textarea id="output4" rows="15" cols="100" readonly></textarea>
+                            
+                        </div>
+
+                        <div class="button-row">
+                            <button type="button" id="bt4">Submit</button>
+                            <button type="reset">Reset</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+
+            <div id="form5" class="form-container hide" style="display: none;">
+                <h2 style="color: #000000;">ISGCloudClient</h2>
+                <form id="formId5">
+                    <div class="form-fields">
+                        <div class="field-container">
+                            <label for="tblNameLbl">Entity</label>
+                            <select id="tblName" name="tblName">
+                                {% for tbl in tablelList %}
+                                    <option value={{ tbl.lebal }}>{{ tbl.lebal }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="field-container">
+                            <label for="tblNameLbl">Env</label>
+                            <select id="tblName" name="tblName">
+                                <option value="A">Prod</option>
+                                <option value="B">Cob</option>
+                            </select>
+                        </div>
+                        
+                        <div class="field-container">
+                            <label for="dateLbl">Key</label>
+                            <input type="text" id="date" name="date">
+                        </div>
+
+                        <div class="field-container">
+                            <label for="dateLbl">SubscriptionName</label>
+                            <input type="text" id="date" name="date">
+                        </div>
+                        <div>
+                            <h2>Output:</h2>
+                            <textarea id="output5" rows="15" cols="100" readonly></textarea>
+                        </div>
+
+                        <div class="button-row">
+                            <button type="button" id="bt5">Submit</button>
+                            <button type="reset">Reset</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <div id="form6" class="form-container hide" style="display: none;">
+                <h2 style="color: #000000;">ImpalaClient</h2>
+                <form id="formId6">
+                    <div class="form-fields">
+                        <div class="field-container">
+                            <label for="tblNameLbl">Entity</label>
+                            <select id="tblName" name="tblName">
+                                {% for tbl in tablelList %}
+                                    <option value={{ tbl.lebal }}>{{ tbl.lebal }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="field-container">
+                            <label for="tblNameLbl">Env</label>
+                            <select id="tblName" name="tblName">
+                                <option value="A">Prod</option>
+                                <option value="B">Cob</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <h2>Query:</h2>
+                            <textarea id="inputQuery6" rows="2" cols="100" readonly></textarea>
+                        </div>
+                        
+                        <div>
+                            <h2>Output:</h2>
+                            <textarea id="output6" rows="15" cols="100" readonly></textarea>
+                        </div>
+
+                        <div class="button-row">
+                            <button type="button" id="bt6">Submit</button>
+                            <button type="reset">Reset</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <div id="form7" class="form-container hide" style="display: none;">
+                <h2 style="color: #000000;">OraasClient</h2>
+                <form id="formId7">
+                    <div class="form-fields">
+                        
+                        
+                        <div class="field-container">
+                            <label for="tblNameLbl">Env</label>
+                            <select id="tblName" name="tblName">
+                                <option value="A">Prod</option>
+                                <option value="B">Cob</option>
+                            </select>
+                        </div>
+
+                        <div class="field-container">
+                            <label for="tblNameLbl">Schema</label>
+                            <select id="tblName" name="tblName">
+                                <option value="A">Schema1</option>
+                                <option value="A">Schema2</option>
+                                <option value="A">Schema3</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <h2>Query:</h2>
+                            <textarea id="inputQuery7" rows="2" cols="100" readonly></textarea>
+                        </div>
+                        
+                        <div>
+                            <h2>Output:</h2>
+                            <textarea id="output7" rows="15" cols="100" readonly></textarea>
+                        </div>
+
+                        <div class="button-row">
+                            <button type="button" id="bt7">Submit</button>
+                            <button type="reset">Reset</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+       
+            <div id="receipt" class="receipt hide" style="display: none;">
+                <p>Submission Summary: ReconID- <span id="requestId">ReqXXXX</span></p>
+                <button class="close-btn" onclick="closeReceipt()">Close</button>
+            </div>
+            
+            <div id="requestTable1" class="requestTable1 hide" style="display:none;">
+                <h3>Please Enter ReconID</h3>
+                <input type="text" id="reqIdInput"/>
+                <button onclick="showRequestData2()">Search</button>
+                <div id="wrapper"></div>
+            </div>
+        
+            <div id="requestTable" style="display: none;" class="hide">
+                <p style="font-size: 16px; font-weight: bold; text-align: center;color: #2c3e50; margin-bottom: 20px;">ReconData</p>
+                <div class="table-container">
+                            <table id="requestDataTable" class="display">
+                                        <thead>
+                                            <tr>
+                                            <th>SMCP</th>
+                                            <th>ProductSK</th>
+                                            <th>LegalEntity</th>
+                                            <th>Exchange</th>
+                                            <th>Exchange1</th>
+                                            <th>SMCP</th>
+                                            <th>ProductSK</th>
+                                            <th>LegalEntity</th>
+                                            <th>Exchange1</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Sample Data -->
+                                            <tr>
+                                                <td>Req1001</td>
+                                                <td>John Doe</td>
+                                                <td>30</td>
+                                                <td>30</td>
+                                                <td>USA</td>
+                                                <td>USA</td>
+                                                <td>John Doe</td>
+                                                <td>30</td>
+                                                <td>USA</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Req1001</td>
+                                                <td>John Doe</td>
+                                                <td>30</td>
+                                                <td>30</td>
+                                                <td>USA</td>
+                                                <td>USA</td>
+                                                <td>John Doe</td>
+                                                <td>30</td>
+                                                <td>USA</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Req1001</td>
+                                                <td>John Doe</td>
+                                                <td>30</td>
+                                                <td>30</td>
+                                                <td>USA</td>
+                                                <td>USA</td>
+                                                <td>John Doe</td>
+                                                <td>30</td>
+                                                <td>USA</td>
+                                            </tr>
+                                        </tbody>
+                            </table>
+                </div>
+            </div>
+
+            <div id="requestTable2" style="display: none;" class="hide">
+                <p style="font-size: 16px; font-weight: bold; text-align: center;color: #2c3e50; margin-bottom: 20px;">ReconHistory</p>
+                <div class="table-container">
+                            <table id="requestDataTable2" class="display">
+                                        <thead>
+                                            <tr>
+                                                <th>ReqID</th>
+                                                <th>CreatedBy</th>
+                                                <th>CreatedDate</th>
+                                                <th>Table</th>
+                                                <th>Pipeline</th>
+                                                <th>Temporal</th>
+                                                <th>OnBoarding</th>
+                                                <th>Batch</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                            </table>
+                </div>
+            </div>
+
+            <div id="skrecon" style="display: none;" class="hide">
+                <p style="font-size: 16px; font-weight: bold; text-align: center;color: #2c3e50; margin-bottom: 20px;">SKReconHistory</p>
+                <div class="table-container">
+                            <table id="skDatarecon" class="display">
+                                        <thead>
+                                            <tr>
+                                                <th>RegionName</th>
+                                                <th>SKMismatchFreq</th>
+                                                <th>SKMismatchCount</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                            </table>
+                </div>
+            </div>
+
+            <div id="countrecon" style="display: none;" class="hide">
+                <p style="font-size: 16px; font-weight: bold; text-align: center;color: #2c3e50; margin-bottom: 20px;">Gemfire Count Recon History</p>
+                <div class="table-container">
+                            <table id="countDatarecon" class="display">
+                                        <thead>
+                                            <tr>
+                                                <th>RegionName</th>
+                                                <th>CountDiff</th>
+                                                <th>HiveCount</th>
+                                                <th>GemfireCount</th>
+                                                <th>DWHUpdateTS</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                            </table>
+                </div>
+            </div>
+
+
+            <div id="gzrecon" style="display: none;" class="hide">
+                <p style="font-size: 16px; font-weight: bold; text-align: center;color: #2c3e50; margin-bottom: 20px;">GreenZoneDetails</p>
+                <div class="table-container">
+                            <table id="gzDatarecon" class="display">
+                                        <thead>
+                                            <tr>
+                                                <th>Cluster</th>
+                                                <th>StartDate</th>
+                                                <th>EndDate</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                            </table>
+                </div>
+            </div>
+
+            <div id="jobsrecon" style="display: none;" class="hide">
+                <p style="font-size: 16px; font-weight: bold; text-align: center;color: #2c3e50; margin-bottom: 20px;">GreenZoneDetails</p>
+                <div class="table-container">
+                            <table id="jobsDatarecon" class="display">
+                                        <thead>
+                                            <tr>
+                                                <th>Table</th>
+                                                <th>Type</th>
+                                                <th>JobName</th>
+                                                <th>Contact</th>
+                                                <th>OnBoarding</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                            </table>
+                </div>
+            </div>
+    </div>
+</body>
+</html>

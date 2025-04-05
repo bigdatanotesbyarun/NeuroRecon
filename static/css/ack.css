@@ -1,0 +1,38 @@
+ /* Receipt Summary */
+ .receipt {
+    display: none;
+    background: #ffffff;
+    color: #333;
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.receipt h3 {
+    text-align: center;
+}
+
+.receipt p {
+    font-size: 14px;
+    text-align: center;
+}
+
+.close-btn {
+    background: #e74c3c;
+    color: white;
+    padding: 8px 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+}
+
+.close-btn:hover {
+    background: #c0392b;
+}
