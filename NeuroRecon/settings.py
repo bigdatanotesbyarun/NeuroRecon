@@ -82,7 +82,7 @@ DATABASES = {
         'NAME':'NeuroReconDB',
         'USER' :'NeuroReconUser',
         'PASSWORD':'NeuroReconPW',
-        'HOST':'localhost'
+        'HOST':'neurorecondb.c3mio28ykxd1.eu-north-1.rds.amazonaws.com'
     }
 }
 
