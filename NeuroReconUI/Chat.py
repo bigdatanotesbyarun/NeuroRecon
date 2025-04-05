@@ -24,7 +24,7 @@ documents1 = [
     "Google Gemini is an advanced AI model for generating human-like responses."
 ]
 
-pdf_path = "C:\\Users\\Lenovo\\Downloads\\1.pdf"  # Replace with actual PDF file path
+pdf_path = "/home/ubuntu/NeuroRecon/NeuroReconUI/1.pdf"  # Replace with actual PDF file path
 loader = PyPDFLoader(pdf_path)
 documents = loader.load()
 text_data = [doc.page_content for doc in documents]  # Extract text

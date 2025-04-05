@@ -14,6 +14,7 @@ Download VCS FreeVersion
 Open the VCS go to file and Open folder Select NeuroRecon then It will import your Project in to VCS
 Go to terminal and cd to F:\ReconProjects\NeuroRecon and enter below CMD in this Path F:\ReconProjects\NeuroRecon
 workon NeuroReconEnv
+python manage.py  makemigrations
 python manage.py startapp  NeuroReconUI
 1 pip install djangorestframework                             
 2-pip install psycopg2
