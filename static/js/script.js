@@ -666,14 +666,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Fetch data for each chart
         const chartUrls = [
-            'http://localhost:8000/chart1/',  // Chart 1 endpoint
-            'http://localhost:8000/chart2/',
-            'http://localhost:8000/chart3/',  // Chart 1 endpoint
-            'http://localhost:8000/chart4/',
-            'http://localhost:8000/chart5/',  // Chart 1 endpoint
-            'http://localhost:8000/chart6/',
-            'http://localhost:8000/chart7/',  // Chart 1 endpoint
-            'http://localhost:8000/chart8/',
+            // 'http://localhost:8000/chart1/',  // Chart 1 endpoint
+            // 'http://localhost:8000/chart2/',
+            // 'http://localhost:8000/chart3/',  // Chart 1 endpoint
+            // 'http://localhost:8000/chart4/',
+            // 'http://localhost:8000/chart5/',  // Chart 1 endpoint
+            // 'http://localhost:8000/chart6/',
+            // 'http://localhost:8000/chart7/',  // Chart 1 endpoint
+            // 'http://localhost:8000/chart8/',
+
+            '/chart1/',  // Chart 1 endpoint
+            '/chart2/',
+            '/chart3/',  // Chart 1 endpoint
+            '/chart4/',
+            '/chart5/',  // Chart 1 endpoint
+            '/chart6/',
+            '/chart7/',  // Chart 1 endpoint
+            '/chart8/',
         ];
 
         // Fetch data for each chart
