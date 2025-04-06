@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import ReconVO
-from .models import GemfireCountTable1,SKReconTable,GZTable,Jobs
+from .models import GemfireCountTable1,SKReconTable,GZTable,Jobs,ReconResult
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -29,3 +29,8 @@ class JobsItemSerializer(serializers.ModelSerializer):
         fields='__all__'
 
         
+
+class ReconResultItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=ReconResult
+        fields='__all__'

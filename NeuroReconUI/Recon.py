@@ -1,6 +1,12 @@
 import requests
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, when
+from pyspark.sql.functions import lit, when, col, struct, explode
+from pyspark.sql.functions import lit, when, col, struct, explode, array
+from pyspark.sql import SparkSession
+from pyspark.sql import Row
+from pyspark.sql.functions import lit, col, when
+from datetime import datetime
 
 
 def fetch_json_from_api(url, payload):
@@ -32,73 +38,59 @@ json4_data = fetch_json_from_api(url_json4, payload)
 print(json1_data);
 
 
-spark = SparkSession.builder.appName('JsonComparison').master('local[*]').enableHiveSupport().getOrCreate()
+spark = SparkSession.builder.appName('JsonComparison').master('local[*]').config("spark.jars", "NeuroReconUI\\Jar\\postgresql-42.7.5.jar").enableHiveSupport().getOrCreate()
 
 spark.sparkContext.setLogLevel("ERROR")
 
 
-json1_df = spark.read.json(spark.sparkContext.parallelize([json1_data]))
-json2_df = spark.read.json(spark.sparkContext.parallelize([json2_data]))
-json3_df = spark.read.json(spark.sparkContext.parallelize([json3_data]))
-json4_df = spark.read.json(spark.sparkContext.parallelize([json4_data]))
+df1 = spark.read.json(spark.sparkContext.parallelize([json1_data]))
+df2 = spark.read.json(spark.sparkContext.parallelize([json2_data]))
+df3 = spark.read.json(spark.sparkContext.parallelize([json3_data]))
 
-print('hello2')
+# Step 3: Join on the key (SMCP)
+joined = df1.alias("df1") \
+    .join(df2.alias("df2"), on="SMCP", how="outer") \
+    .join(df3.alias("df3"), on="SMCP", how="outer")
 
-columns = json1_df.columns
-print('hello3')
+# Step 4: Generate a dummy Request ID
+request_id = f"req{datetime.now().strftime('%Y%m%d%H%M%S')}"
 
-df = json1_df.join(json2_df, "name", "outer") \
-             .join(json3_df, "name", "outer") \
-             .join(json4_df, "name", "outer")
+# Step 5: Compare field by field and prepare recon output
+fields = ["Status", "Isin"]
+recon_data = []
 
-
-comparison_columns = []
-for column in columns:
-   
-    comparison_columns.append(
-        {
-            "column": column,
-            "json1_value": col(f"json1.{column}"),
-            "json2_value": col(f"json2.{column}"),
-            "json3_value": col(f"json3.{column}"),
-            "json4_value": col(f"json4.{column}"),
-            "status": when(
-                (col(f"json1.{column}") != col(f"json2.{column}")) |
-                (col(f"json1.{column}") != col(f"json3.{column}")) |
-                (col(f"json1.{column}") != col(f"json4.{column}")),
-                "Mismatch"
-            ).otherwise("Match"),
-            "code": when(
-                (col(f"json1.{column}") != col(f"json2.{column}")),
-                "1011"
-            ).when(
-                (col(f"json1.{column}") != col(f"json3.{column}")),
-                "1101"
-            ).when(
-                (col(f"json1.{column}") != col(f"json4.{column}")),
-                "1110"
-            ).otherwise("1111")
-        }
+for field in fields:
+    recon_data.append(
+        joined.select(
+            col("SMCP").alias("JoinKey"),                 # JoinKey FIRST
+            lit(field).alias("FieldName"),
+            col(f"df1.{field}").alias("Kafka"),
+            col(f"df2.{field}").alias("Impala"),
+            col(f"df3.{field}").alias("Gemfire"),
+            when(
+                (col(f"df1.{field}") == col(f"df2.{field}")) &
+                (col(f"df2.{field}") == col(f"df3.{field}")),
+                "Match"
+            ).otherwise("Mismatch").alias("ReconStatus"),
+            lit(request_id).alias("RequestID")
+        )
     )
-print('hello4.0')
-# Create the final DataFrame with all comparisons and status
-final_columns = []
-for comp in comparison_columns:
-    final_columns.append(comp["column"])
-    final_columns.append(comp["json1_value"])
-    final_columns.append(comp["json2_value"])
-    final_columns.append(comp["json3_value"])
-    final_columns.append(comp["json4_value"])
-    final_columns.append(comp["status"])
-    final_columns.append(comp["code"])
 
-# Select the final comparison DataFrame
-comparison_df = df.select(*final_columns)
-print('hello41')
-# Show the result with comparison indicators
-comparison_df.show()
-print('hello42')
-# Optionally, save the result back to a file
-comparison_df.write.json("comparison_output.json")
+# Step 6: Union all comparisons
+final_df = recon_data[0]
+for df in recon_data[1:]:
+    final_df = final_df.union(df)
 
-print('hello43')
+# Step 7: Show output
+final_df.show(truncate=False)
+
+final_df.write \
+    .format("jdbc") \
+    .option("url", "jdbc:postgresql://localhost:5432/telusko") \
+    .option("dbtable", "neuroreconui_reconresult") \
+    .option("user", "postgres") \
+    .option("password", "1234") \
+    .option("driver", "org.postgresql.Driver") \
+    .mode("append") \
+    .save()
+print('Data Written')

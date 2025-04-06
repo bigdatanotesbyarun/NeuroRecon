@@ -3,8 +3,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import ChartPanelCOB,ReconVO,RequestVO,GZTable, Jobs,Sidebar,HeaderPanel,ChartPanel,Table, PipeLine ,GemfireCountTable1,SKReconTable
-from .serializers import ItemSerializer,GemfireItemSerializer,SKReconItemSerializer,GreenZoneItemSerializer,JobsItemSerializer
+from .models import ChartPanelCOB,ReconVO,ReconResult,RequestVO,GZTable, Jobs,Sidebar,HeaderPanel,ChartPanel,Table, PipeLine ,GemfireCountTable1,SKReconTable
+from .serializers import ItemSerializer,GemfireItemSerializer,ReconResultItemSerializer,SKReconItemSerializer,GreenZoneItemSerializer,JobsItemSerializer
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -123,4 +123,11 @@ def get_jobs_data(request):
         recon=Jobs.objects.all()
         serializer=JobsItemSerializer(recon,many=True)
         return Response(serializer.data);
+
+@api_view(['GET'])
+def get_recon_result(request):
+        recon=ReconResult.objects.all()
+        serializer=ReconResultItemSerializer(recon,many=True)
+        return Response(serializer.data);
+
 

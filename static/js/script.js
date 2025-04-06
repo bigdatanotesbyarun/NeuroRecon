@@ -159,17 +159,65 @@
     return cookieValue;
     }
 
+    // function showRequestData2() {
+    //     hideElements("hide");
+    //     document.getElementById('requestTable').style.display = 'block';
+    //     $('#requestDataTable').DataTable({
+    //         dom: 'Bfrtip',
+    //         buttons: [
+    //             { extend: 'excelHtml5', text: 'ExportExcel', className: 'btn-export btn-excel' }
+    //         ],
+    //         // Other DataTables options...
+    //       });
+    //     }
     function showRequestData2() {
         hideElements("hide");
         document.getElementById('requestTable').style.display = 'block';
-        $('#requestDataTable').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                { extend: 'excelHtml5', text: 'ExportExcel', className: 'btn-export btn-excel' }
-            ],
-            // Other DataTables options...
-          });
-        }
+        $.ajax({
+            url: "/get_recon_result/",
+            type: "GET",
+            success: function (response) {
+                let tableBody = $("#requestDataTable tbody");
+                tableBody.empty();
+                
+                response.forEach(ReconResult => {
+                    let row = `<tr>
+s                       <td>${ReconResult.RequestID}</td>
+                        <td>${ReconResult.JoinKey}</td>
+                        <td>${ReconResult.FieldName}</td>
+                        <td>${ReconResult.Kafka}</td>
+                        <td>${ReconResult.Impala}</td>
+                        <td>${ReconResult.Gemfire}</td>
+                        <td>${ReconResult.ReconStatus}</td>
+                    </tr>`;
+                    tableBody.append(row);
+                });
+
+                // Destroy existing DataTable instance before re-initializing
+                if ($.fn.DataTable.isDataTable("#requestDataTable")) {
+                    $("#requestDataTable").DataTable().destroy();
+                }
+
+                // Initialize DataTable with sorting, filtering, pagination & export
+                $("#requestDataTable").DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        { extend: 'excelHtml5', text: 'ExportExcel', className: 'btn-export btn-excel' }
+                    ],
+                    paging: true,      // Enable pagination
+                    searching: true,   // Enable search filter
+                    ordering: true,    // Enable sorting
+                    responsive: true,  // Enable responsive design
+                });
+            },
+            error: function () {
+                alert("Error fetching data!");
+            }
+        });
+    }
+
+
+
 
    $(document).ready(function () {
     $("#loadHistory").click(function (event) {

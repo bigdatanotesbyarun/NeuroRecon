@@ -13,12 +13,9 @@ def get_kafka_data(request):
             
             # Hardcoded JSON data for the response
             response_data = {
-                "SMCP": "111",
-                "message": "Hello",
-                "status": "success",
-                "data": {
-                    "example_key": "example_value"
-                }
+                "SMCP": "9999",
+                "Status": "Active",
+                "Isin": "1111",
             }
             # Return the hardcoded JSON data as a response
             return JsonResponse(response_data, status=200)
@@ -38,12 +35,9 @@ def get_gemfire_data(request):
             # response = requests.post(external_api_url, json=incoming_data, headers=headers)
             # return JsonResponse(response.json(), status=response.status_code)
             response_data = {
-                "SMCP": "111",
-                "message": "Hello",
-                "status": "success",
-                "data": {
-                    "example_key": "example_value"
-                }
+                 "SMCP": "9999",
+                 "Status": "Active",
+                "Isin": "1111",
             }
             # Return the hardcoded JSON data as a response
             return JsonResponse(response_data, status=200)
@@ -61,12 +55,9 @@ def get_cloud_data(request):
             # response = requests.post(external_api_url, json=incoming_data, headers=headers)
             # return JsonResponse(response.json(), status=response.status_code)
             response_data = {
-                "SMCP": "111",
-                "message": "Hello",
-                "status": "success",
-                "data": {
-                    "example_key": "example_value"
-                }
+                "SMCP": "9999",
+                "Status": "Active",
+                "Isin": "1111",
             }
             # Return the hardcoded JSON data as a response
             return JsonResponse(response_data, status=200)
@@ -84,12 +75,9 @@ def get_impala_data(request):
             # response = requests.post(external_api_url, json=incoming_data, headers=headers)
             # return JsonResponse(response.json(), status=response.status_code)
             response_data = {
-                "SMCP": "111",
-                "message": "Hello",
-                "status": "success",
-                "data": {
-                    "example_key": "example_value"
-                }
+                "SMCP": "9999",
+                "Status": "Active",
+                "Isin": "1111",
             }
             # Return the hardcoded JSON data as a response
             return JsonResponse(response_data, status=200)

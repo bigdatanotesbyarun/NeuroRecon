@@ -91,5 +91,16 @@ class Jobs(models.Model):
     jobName=models.CharField(max_length=1000)
     POC=models.CharField(max_length=1000)
     onBoarding=models.CharField(max_length=1000)
+
+class ReconResult(models.Model):
+    JoinKey=models.CharField(max_length=1000)
+    FieldName=models.CharField(max_length=1000)
+    Kafka=models.CharField(max_length=1000)
+    Impala=models.CharField(max_length=1000)
+    Gemfire=models.CharField(max_length=1000)
+    ReconStatus=models.CharField(max_length=1000)
+    RequestID=models.CharField(max_length=1000)
+    class Meta:
+        db_table = 'neuroreconui_reconresult' 
   
    
