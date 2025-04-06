@@ -71,9 +71,10 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken
+                    'X-CSRFToken': getCookie('csrftoken') 
                 },
-                body: jsonData1
+                body: jsonData1,
+                credentials: "same-origin"
             })
             .then((response) => response.json())
             .then((data) =>{
