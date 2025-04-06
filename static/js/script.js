@@ -469,6 +469,15 @@ $(document).ready(function () {
                     tableBody.append(row);
                 });
 
+
+              
+                
+
+
+
+
+
+
                 // Destroy existing DataTable instance before re-initializing
                 if ($.fn.DataTable.isDataTable("#jobsDatarecon")) {
                     $("#jobsDatarecon").DataTable().destroy();
