@@ -189,6 +189,7 @@ s                       <td>${ReconResult.RequestID}</td>
                         <td>${ReconResult.Impala}</td>
                         <td>${ReconResult.Gemfire}</td>
                         <td>${ReconResult.ReconStatus}</td>
+                          <td>${ReconResult.env}</td>
                     </tr>`;
                     tableBody.append(row);
                 });
@@ -245,7 +246,8 @@ s                       <td>${ReconResult.RequestID}</td>
                         <td>${ReconVO.temporal}</td>
                         <td>${ReconVO.onBoarding}</td>
                         <td>${ReconVO.batch}</td>
-                        <td>Pass</td>
+                        <td>${ReconVO.env}</td>
+                        <td>${ReconVO.field6}</td>
                     </tr>`;
                     tableBody.append(row);
                 });
@@ -293,10 +295,12 @@ $(document).ready(function () {
                 
                 response.forEach(SKReconTable => {
                     let row = `<tr>
+                        <td>${SKReconTable.tblname}</td>    
                         <td>${SKReconTable.name}</td>
                         <td>${SKReconTable.mismatchFreq}</td>
                         <td>${SKReconTable.mismatchCount}</td>
                         <td>${SKReconTable.created}</td>
+                         <td>${SKReconTable.env}</td>
                          </tr>`;
                     tableBody.append(row);
                 });
@@ -344,11 +348,13 @@ $(document).ready(function () {
                 
                 response.forEach(GemfireCountTable1 => {
                     let row = `<tr>
-                        <td>${GemfireCountTable1.name}</td>
+                     <td>${GemfireCountTable1.tblName}</td>   
+                    <td>${GemfireCountTable1.name}</td>
                         <td>${GemfireCountTable1.countDiff}</td>
                         <td>${GemfireCountTable1.hiveCount}</td>
                          <td>${GemfireCountTable1.gemfireCount}</td>
                         <td>${GemfireCountTable1.created}</td>
+                         <td>${GemfireCountTable1.env}</td>
                          </tr>`;
                     tableBody.append(row);
                 });
@@ -399,6 +405,10 @@ $(document).ready(function () {
                          <td>${GZTable.name}</td>
                          <td>${GZTable.statts}</td>
                          <td>${GZTable.endts}</td>
+                        <td>${GZTable.env}</td>
+                        <td>${GZTable.eapps}</td>
+                        <td>${GZTable.ps}</td>
+                         <td>${GZTable.pltps}</td>
                          </tr>`;
                     tableBody.append(row);
                 });
@@ -452,6 +462,9 @@ $(document).ready(function () {
                          <td>${Jobs.jobName}</td>
                          <td>${Jobs.POC}</td>
                          <td>${Jobs.onBoarding}</td>
+                         <td>${Jobs.executionTime}</td>
+                         <td>${Jobs.lastts}</td>
+                         <td>${Jobs.env}</td>
                          </tr>`;
                     tableBody.append(row);
                 });

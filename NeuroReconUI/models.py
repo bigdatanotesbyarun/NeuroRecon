@@ -35,13 +35,18 @@ class Table(models.Model):
     isRTTable=models.CharField(max_length=1000)
 
 class GemfireCountTable1(models.Model):
+    tblname=models.CharField(max_length=1000)
     name=models.CharField(max_length=1000)
     countDiff=models.IntegerField()
     hiveCount=models.IntegerField()
     gemfireCount=models.IntegerField()
     created=models.DateTimeField()
+    env=models.CharField(max_length=1000,default="Test")
+    
 
 class SKReconTable(models.Model):
+    tblname=models.CharField(max_length=1000,default="Test")
+    env=models.CharField(max_length=1000,default="Test")
     name=models.CharField(max_length=1000)
     mismatchFreq=models.IntegerField()
     mismatchCount=models.IntegerField()
@@ -51,6 +56,10 @@ class GZTable(models.Model):
     name=models.CharField(max_length=1000)
     statts=models.DateTimeField()
     endts=models.DateTimeField()
+    env=models.CharField(max_length=1000,default="Test")
+    ps=models.CharField(max_length=1000,default="Test")
+    pltps=models.CharField(max_length=1000,default="Test")
+    eapps=models.CharField(max_length=1000,default="Test")
 
 class PipeLine(models.Model):
     name=models.CharField(max_length=1000)
@@ -91,6 +100,9 @@ class Jobs(models.Model):
     jobName=models.CharField(max_length=1000)
     POC=models.CharField(max_length=1000)
     onBoarding=models.CharField(max_length=1000)
+    env=models.CharField(max_length=1000,default="Test")
+    lastts=models.CharField(max_length=1000,default="Test")
+    executionTime=models.CharField(max_length=1000,default="Test")
 
 class ReconResult(models.Model):
     JoinKey=models.CharField(max_length=1000)
@@ -100,6 +112,7 @@ class ReconResult(models.Model):
     Gemfire=models.CharField(max_length=1000)
     ReconStatus=models.CharField(max_length=1000)
     RequestID=models.CharField(max_length=1000)
+    env=models.CharField(max_length=1000,default="Test")
     class Meta:
         db_table = 'neuroreconui_reconresult' 
   

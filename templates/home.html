@@ -567,7 +567,7 @@
                                                 <th>Impala</th>
                                                 <th>Gemfire</th>
                                                 <th>ReconStatus</th>
-                                               
+                                                <th>Env</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -586,10 +586,11 @@
                                                 <th>CreatedBy</th>
                                                 <th>Date</th>
                                                 <th>Table</th>
-                                                <th>Pipeline</th>
+                                                <th>Flow</th>
                                                 <th>Temporal</th>
-                                                <th>OnBoarding</th>
+                                                <th>Onboarding</th>
                                                 <th>Batch</th>
+                                                <th>Env</th>
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
@@ -605,10 +606,12 @@
                             <table id="skDatarecon" class="display">
                                         <thead>
                                             <tr>
+                                                <th>TableName</th>
                                                 <th>RegionName</th>
                                                 <th>SKMismatchFreq</th>
                                                 <th>SKMismatchCount</th>
                                                 <th>Date</th>
+                                                <th>Env</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -623,11 +626,13 @@
                             <table id="countDatarecon" class="display">
                                         <thead>
                                             <tr>
+                                                <th>TableName</th>
                                                 <th>RegionName</th>
                                                 <th>CountDiff</th>
                                                 <th>HiveCount</th>
                                                 <th>GemfireCount</th>
                                                 <th>DWHUpdateTS</th>
+                                                <th>Env</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -646,6 +651,10 @@
                                                 <th>Cluster</th>
                                                 <th>StartDate</th>
                                                 <th>EndDate</th>
+                                                <th>Env</th>
+                                                <th>CorePS</th>
+                                                <th>PlatformPS</th>
+                                                <th>EAP</th>
                                                 </tr>
                                         </thead>
                                         <tbody>
@@ -655,7 +664,7 @@
             </div>
 
             <div id="jobsrecon" style="display: none;" class="hide">
-                <p style="font-size: 16px; font-weight: bold; text-align: center;color: #2c3e50; margin-bottom: 20px;">GreenZoneDetails</p>
+                <p style="font-size: 16px; font-weight: bold; text-align: center;color: #2c3e50; margin-bottom: 20px;">JobCatalog</p>
                 <div class="table-container">
                             <table id="jobsDatarecon" class="display">
                                         <thead>
@@ -665,6 +674,9 @@
                                                 <th>JobName</th>
                                                 <th>Contact</th>
                                                 <th>OnBoarding</th>
+                                                <td>Env</td>
+                                                <td>ExecutionTime</td>
+                                                <td>LastExecutionDate</td>
                                                 </tr>
                                         </thead>
                                         <tbody>
