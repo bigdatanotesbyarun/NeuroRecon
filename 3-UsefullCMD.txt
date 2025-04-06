@@ -1,0 +1,7 @@
+python manage.py makemigrations
+python manage.py sqlmigrate 0030_remove_greenzonevo2_enddate_and_more
+python manage.py migrate
+python manage.py startapp base
+python manage.py runserver
+python manage.py runserver --settings=NeuroRecon.settings0
+python manage.py createsuperuser --settings=NeuroRecon.settings0
