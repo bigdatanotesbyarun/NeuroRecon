@@ -76,6 +76,16 @@ WSGI_APPLICATION = 'NeuroRecon.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# import environ
+
+# env = environ.Env()
+# environ.Env.read_env()
+# DATABASES = {
+#     'default': env.db(),  # Automatically loads the DATABASE_URL from environment variables
+# }
+GOOGLE_API_KEY='AIzaSyDLsN1tJQWw00Eh57Rnw_tLLH5VfN5DFkk'
+
+ENV='LOCAL'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -85,6 +95,7 @@ DATABASES = {
         'HOST':'localhost'
     }
 }
+
 
 
 # Password validation

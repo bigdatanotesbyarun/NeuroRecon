@@ -16,6 +16,8 @@ pip install -U langchain-community faiss-cpu
 pip install pypdf  
 pip install django-environ
 pip install openpyxl
+pip install django-environ
+pip install openpyxl
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '51.21.161.68']
 python manage.py  createsuperuser

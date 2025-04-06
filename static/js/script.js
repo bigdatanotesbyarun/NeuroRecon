@@ -245,6 +245,7 @@ s                       <td>${ReconResult.RequestID}</td>
                         <td>${ReconVO.temporal}</td>
                         <td>${ReconVO.onBoarding}</td>
                         <td>${ReconVO.batch}</td>
+                        <td>Pass</td>
                     </tr>`;
                     tableBody.append(row);
                 });
@@ -805,5 +806,4 @@ function renderChart(chartId, chartData) {
         options: options  // Chart options with data labels and formatted y-axis
     });
 }
-
 

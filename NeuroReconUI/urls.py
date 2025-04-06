@@ -1,9 +1,10 @@
 from django.urls import path
-from . import views,Chat,ClientServices,Chart
+from . import ChatExcel,views,Chat,ClientServices,Chart,ChatDB,Recon
 
 
 urlpatterns = [
     path('home/', views.home,name="home"),
+    path('audit/',Recon.audit, name='audit'),
     path('logout/', views.logout_view, name='logout'),
     path('login/', views.login_view, name='login'),
     path('get_recon_data/', views.get_recon_data, name='get_recon_data'),
@@ -15,6 +16,8 @@ urlpatterns = [
     path('get_jobs_data/', views.get_jobs_data, name='get_jobs_data'),
     path('get_jobs_data/', views.get_jobs_data, name='get_jobs_data'),
     path('get_chat_data/', Chat.get_chat_data, name='get_chat_data'),
+    path('get_chat_data_fromExcel/', ChatExcel.get_chat_data_fromExcel, name='get_chat_data_fromExcel'),
+    path('get_data_from_natural_language_query/',ChatDB.get_data_from_natural_language_query, name='get_data_from_natural_language_query'),
     path('get_cloud_data/', ClientServices.get_cloud_data, name='get_cloud_data'),
     path('get_kafka_data/', ClientServices.get_kafka_data, name='get_kafka_data'),
     path('get_impala_data/',ClientServices.get_impala_data, name='get_impala_data'),

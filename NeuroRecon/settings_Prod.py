@@ -86,7 +86,8 @@ DATABASES = {
         'PORT':'5432'
     }
 }
-
+ENV='PROD'
+CLOUDurl = "https://your-aws-domain.com"
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

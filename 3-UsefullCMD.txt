@@ -4,4 +4,5 @@ python manage.py migrate
 python manage.py startapp base
 python manage.py runserver
 python manage.py runserver --settings=NeuroRecon.settings0
+python manage.py runserver --settings=NeuroRecon.settings_Prod
 python manage.py createsuperuser --settings=NeuroRecon.settings0
