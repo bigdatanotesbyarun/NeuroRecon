@@ -189,7 +189,7 @@ s                       <td>${ReconResult.RequestID}</td>
                         <td>${ReconResult.Impala}</td>
                         <td>${ReconResult.Gemfire}</td>
                         <td>${ReconResult.ReconStatus}</td>
-                          <td>${ReconResult.env}</td>
+                        <td>${ReconResult.env}</td>
                     </tr>`;
                     tableBody.append(row);
                 });
@@ -462,9 +462,9 @@ $(document).ready(function () {
                          <td>${Jobs.jobName}</td>
                          <td>${Jobs.POC}</td>
                          <td>${Jobs.onBoarding}</td>
-                         <td>${Jobs.executionTime}</td>
-                         <td>${Jobs.lastts}</td>
                          <td>${Jobs.env}</td>
+                         <td>${Jobs.lastts}</td>
+                         <td>${Jobs.executionTime}</td>
                          </tr>`;
                     tableBody.append(row);
                 });

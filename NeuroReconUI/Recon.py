@@ -37,7 +37,7 @@ def audit(request):
         base_url = "http://localhost:8000"
         print("In Production Environment")
     else:
-        base_url =settings.CLOUDurl
+        base_url ="http://13.48.57.113:8000"
         print("In Development Environment")
 
     url_json1 = f"{base_url}/get_cloud_data/"

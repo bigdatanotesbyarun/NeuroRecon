@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'rest_framework',
 ]
 
+CLOUDurl = "http://13.48.57.113:8000"
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

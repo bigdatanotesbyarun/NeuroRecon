@@ -33,3 +33,5 @@ AdminLocal		User- admin                       Password-1234
 
 python manage.py  createsuperuser
 python manage.py changepassword admin
+export DJANGO_SETTINGS_MODULE=NeuroRecon.settings
+export DJANGO_SETTINGS_MODULE=NeuroRecon.settings_Prod
