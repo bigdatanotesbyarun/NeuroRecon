@@ -54,7 +54,7 @@ conversation_chain = ConversationalRetrievalChain.from_llm(
 
 # ✅ Step 9: Django REST API Endpoint
 @api_view(['POST'])
-def get_chat_data(request):
+def get_chat_dataPDF(request):
     user_input = request.data.get("message", "")
     if not user_input:
         return Response({"error": "Message is required"}, status=400)

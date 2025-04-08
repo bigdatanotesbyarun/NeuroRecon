@@ -44,7 +44,7 @@ memory = ConversationBufferMemory(memory_key="chat_history", return_messages=Tru
 
 # Define the vector_store inside the view function
 @api_view(['POST'])
-def get_chat_data_fromExcel(request):
+def get_chat_dataEXCEL(request):
     user_input = request.data.get("message", "")
     if not user_input:
         return Response({"error": "Message is required"}, status=400)

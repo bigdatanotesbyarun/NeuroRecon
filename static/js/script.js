@@ -2,6 +2,8 @@
 
 	let currentForm=null;
 
+    var a='';
+
 	
 	function closeReceipt() {
         hideElements("hide");
@@ -30,8 +32,20 @@
         const sendMessageBtn = document.getElementById("send-message");
         const chatInput = document.getElementById("chat-input");
         const chatBody = document.getElementById("chat-body");
-
        
+        const topicButtons= document.getElementsByClassName("seg-btn");
+
+
+
+        for (i = 0; i < topicButtons.length; ++i) {
+            topicButtons[i].addEventListener("click",function(e){
+                document.querySelector(".seg-btn.selectedOption").classList.remove("selectedOption");
+                e.target.classList.add("selectedOption")
+                a=e.currentTarget.dataset.value
+                console.log(e.currentTarget.dataset.value)
+            })
+          };
+        
         // Open chatbot when clicking the sidebar link
         openChatLink.addEventListener("click", function (event) {
             event.preventDefault();
@@ -62,7 +76,7 @@
     
             // Clear input field
             chatInput.value = "";
-            const get_chat_data = '/get_chat_data/';
+            const get_chat_data = '/get_chat_data'+a+'/'
             userMessage={"message": userText}
             const jsonData1=JSON.stringify(userMessage);
             console.log(JSON.stringify(userMessage));
@@ -107,6 +121,8 @@
         // Send message on Enter key
         chatInput.addEventListener("keypress", function (e) {
             if (e.key === "Enter") {
+                
+             
                 sendMessage();
             }
         });
@@ -733,7 +749,7 @@ function hideElements(classNames) {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("showChart").addEventListener("click", function() {
+    document.getElementById("showChart")?.addEventListener("click", function() {
         document.getElementById("chartContainer").style.display = "block";  // Show the chart container
 
         // Fetch data for each chart
