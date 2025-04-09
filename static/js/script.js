@@ -260,7 +260,6 @@ s                       <td>${ReconResult.RequestID}</td>
                         <td>${ReconVO.tblName}</td>
                         <td>${ReconVO.pipeline}</td>
                         <td>${ReconVO.temporal}</td>
-                        <td>${ReconVO.onBoarding}</td>
                         <td>${ReconVO.batch}</td>
                         <td>${ReconVO.env}</td>
                         <td>${ReconVO.field6}</td>
@@ -477,7 +476,7 @@ $(document).ready(function () {
                          <td>${Jobs.type}</td>
                          <td>${Jobs.jobName}</td>
                          <td>${Jobs.POC}</td>
-                   
+                         <td>${Jobs.onBoarding}</td>
                          <td>${Jobs.env}</td>
                          <td>${Jobs.lastts}</td>
                          <td>${Jobs.executionTime}</td>
