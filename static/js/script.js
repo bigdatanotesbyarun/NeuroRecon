@@ -477,7 +477,7 @@ $(document).ready(function () {
                          <td>${Jobs.type}</td>
                          <td>${Jobs.jobName}</td>
                          <td>${Jobs.POC}</td>
-                         <td>${Jobs.onBoarding}</td>
+                   
                          <td>${Jobs.env}</td>
                          <td>${Jobs.lastts}</td>
                          <td>${Jobs.executionTime}</td>
