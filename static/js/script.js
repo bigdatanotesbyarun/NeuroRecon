@@ -845,3 +845,13 @@ function renderChart(chartId, chartData) {
     });
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const content = document.querySelector('.content');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('hidden');
+      content.classList.toggle('sidebar-hidden');
+    });
+});

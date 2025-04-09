@@ -53,27 +53,3 @@
     font-weight: 400;
     color: #fff;
 }
-
-
-/* Toggle sidebar visibility (slide out to the left) */
-.sidebar.hidden {
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-  }
-  
-  /* Smooth transition for sidebar */
-  .sidebar {
-    transition: transform 0.3s ease;
-  }
-  
-  /* Adjust content when sidebar is hidden */
-  .content.sidebar-hidden {
-    margin-left: 0 !important;
-    transition: margin-left 0.3s ease;
-  }
-  .menu-icon {
-    font-size: 24px;
-    color: white;
-    cursor: pointer;
-    margin-right: 15px;
-  }
