@@ -365,22 +365,90 @@
     }
     
 
-   $(document).ready(function () {
+//    $(document).ready(function () {
+//     $("#loadHistory").click(function (event) {
+//         event.preventDefault();
+//         hideElements("hide");
+        
+//         // Hide other sections
+//         // $("#form1,#form2,#form3,#form4,#form5,#form6,#countrecon,#skrecon,#chat-container, #chartContainer, #requestTable1, #requestTable, #receipt, #form1 ,#gzrecon,#jobsrecon").hide();
+//         $("#requestTable2").show(); // Show the table
+        
+//         $.ajax({
+//             url: "/get_recon_data/",
+//             type: "GET",
+//             success: function (response) {
+//                 let tableBody = $("#requestDataTable2 tbody");
+//                 tableBody.empty();
+                
+//                 response.forEach(ReconVO => {
+//                     let statusColor = (ReconVO.field6 === "Completed") ? 'green' : 'red';
+//                     let row = `<tr>
+//                         <td><a href="#" onclick="showRequestData2('${ReconVO.reqId}')">${ReconVO.reqId}</a></td>
+//                         <td>${ReconVO.name}</td>
+//                         <td>${ReconVO.created}</td>
+//                         <td>${ReconVO.tblName}</td>
+//                         <td>${ReconVO.pipeline}</td>
+//                         <td>${ReconVO.temporal}</td>
+//                         <td>${ReconVO.batch}</td>
+//                         <td>${ReconVO.field2}</td>
+//                         <td style="color: ${statusColor}; font-weight: bold;">${ReconVO.field6}</td>
+//                     </tr>`;
+//                     tableBody.append(row);
+//                 });
+
+//                 // Destroy existing DataTable instance before re-initializing
+//                 if ($.fn.DataTable.isDataTable("#requestDataTable2")) {
+//                     $("#requestDataTable2").DataTable().destroy();
+//                 }
+
+//                 // Initialize DataTable with sorting, filtering, pagination & export
+//                 $("#requestDataTable2").DataTable({
+//                     dom: 'Bfrtip',
+//                     buttons: [
+//                         { extend: 'excelHtml5', text: 'ExportExcel', className: 'btn-export btn-excel' }
+//                     ],
+//                     paging: true,      // Enable pagination
+//                     searching: true,   // Enable search filter
+//                     ordering: true,    // Enable sorting
+//                     responsive: true, 
+//                     columnDefs: [
+//                         { orderable: false, targets: [1] }  // Disable sorting for JoinKey (column 1) and FieldName (column 2)
+//                     ]   // Enable responsive design
+//                 });
+
+//                 $('#filterReqAttribute').on('click', function() {
+//                     $('#filterReqAttribute').toggle(); // Show/hide the input field
+//                 });
+    
+//                 // Filter table based on input value for JoinKey
+//                 $('#filterReqAttribute').on('input', function() {
+//                     var filterValue = $(this).val();
+//                     dataTable.column(1).search(filterValue).draw(); // Column 1 is the JoinKey column
+//                 });
+//             },
+//             error: function () {
+//                 alert("Error fetching data!");
+//             }
+//         });
+//     });
+// });
+
+$(document).ready(function () {
     $("#loadHistory").click(function (event) {
         event.preventDefault();
         hideElements("hide");
-        
-        // Hide other sections
-        // $("#form1,#form2,#form3,#form4,#form5,#form6,#countrecon,#skrecon,#chat-container, #chartContainer, #requestTable1, #requestTable, #receipt, #form1 ,#gzrecon,#jobsrecon").hide();
-        $("#requestTable2").show(); // Show the table
-        
+
+        // Show the table
+        $("#requestTable2").show();
+
         $.ajax({
             url: "/get_recon_data/",
             type: "GET",
             success: function (response) {
                 let tableBody = $("#requestDataTable2 tbody");
                 tableBody.empty();
-                
+
                 response.forEach(ReconVO => {
                     let statusColor = (ReconVO.field6 === "Completed") ? 'green' : 'red';
                     let row = `<tr>
@@ -403,7 +471,7 @@
                 }
 
                 // Initialize DataTable with sorting, filtering, pagination & export
-                $("#requestDataTable2").DataTable({
+                let dataTable = $("#requestDataTable2").DataTable({
                     dom: 'Bfrtip',
                     buttons: [
                         { extend: 'excelHtml5', text: 'ExportExcel', className: 'btn-export btn-excel' }
@@ -411,8 +479,24 @@
                     paging: true,      // Enable pagination
                     searching: true,   // Enable search filter
                     ordering: true,    // Enable sorting
-                    responsive: true,  // Enable responsive design
+                    responsive: true, 
+                    columnDefs: [
+                        { orderable: false, targets: [0] } // Disable sorting for Status column (column 8)
+                    ] // Enable responsive design
                 });
+
+                // Show and hide the filter input for ReqID
+                $('#filterReqID').on('click', function () {
+                    $('#filterReqIDInput').toggle(); // Toggle the visibility of the filter input field
+                });
+
+                // Filter ReqID column based on input value
+                $('#filterReqIDInput').on('input', function () {
+                    var filterValue = $(this).val();
+                    dataTable.column(0).search(filterValue).draw(); // Column 0 is the ReqID column
+                });
+
+
             },
             error: function () {
                 alert("Error fetching data!");
@@ -420,7 +504,6 @@
         });
     });
 });
-
 
 
 $(document).ready(function () {
