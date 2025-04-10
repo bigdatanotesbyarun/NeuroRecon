@@ -915,6 +915,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const uploadBtn = document.getElementById("bt8");
         const form = document.getElementById("formId8");
     
+        // Function to get the CSRF token from the cookie
+        function getCookie(name) {
+            const cookieValue = document.cookie
+                .split('; ')
+                .find(row => row.startsWith(name + '='))
+                ?.split('=')[1];
+            return cookieValue ? decodeURIComponent(cookieValue) : null;
+        }
+    
         uploadBtn.addEventListener("click", function (e) {
             e.preventDefault();
     
@@ -932,31 +941,36 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
     
+            // Append form data
             formData.append("env", env);
             formData.append("entity", entity);
             formData.append("filePath", filePath);
             formData.append("fileType", fileType);
             formData.append("file", file);
-            const csrftoken = getCookie('csrftoken');
-            // const csrftoken = getCookie('csrftoken');
-            // fetch(saveUserDataUrl, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'X-CSRFToken': csrftoken
-            //     },
-            //     body: jsonData
-            // })
-
-
+    
+            const csrftoken = getCookie('csrftoken'); // Get CSRF token from cookies
+    
+            if (!csrftoken) {
+                alert("CSRF token not found!");
+                return;
+            }
+    
+            // Show the loading spinner (you can add this part if you have a spinner element)
+            const loadingSpinner = document.getElementById("loadingSpinner");
+            loadingSpinner.style.display = 'flex';  // Assuming you have a spinner element in your HTML
+    
             fetch("/upload-file/", {
                 method: "POST",
-                headers: { 'X-CSRFToken': csrftoken
+                headers: {
+                    'X-CSRFToken': csrftoken, // CSRF token in headers
                 },
                 body: formData,
             })
                 .then((response) => response.json())
                 .then((data) => {
+                    // Hide the loading spinner after response
+                    loadingSpinner.style.display = 'none';
+    
                     if (data.success) {
                         alert("File uploaded successfully.");
                         form.reset();
@@ -965,6 +979,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 })
                 .catch((error) => {
+                    // Hide the loading spinner if there's an error
+                    loadingSpinner.style.display = 'none';
+    
                     console.error("Upload error:", error);
                     alert("Error uploading file.");
                 });
