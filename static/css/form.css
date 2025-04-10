@@ -142,3 +142,18 @@ button[type="reset"]:hover {
             max-width: 800px;
             margin: 0 auto;
 }
+
+
+#inputQuery6 {
+    padding-top: 10px; /* Adjust top padding */
+    padding-left: 10px; /* Optional left padding */
+    padding-right: 10px; /* Optional right padding */
+    padding-bottom: 10px; /* Optional bottom padding */
+}
+
+#inputQuery7 {
+    padding-top: 10px; /* Adjust top padding */
+    padding-left: 10px; /* Optional left padding */
+    padding-right: 10px; /* Optional right padding */
+    padding-bottom: 10px; /* Optional bottom padding */
+}
