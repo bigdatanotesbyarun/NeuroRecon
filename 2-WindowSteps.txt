@@ -39,6 +39,7 @@ pip install psycopg2
 pip install requests
 pip install django-environ
 pip install openpyxl	
+pip install pandas
 				       
 #Set Below Path in ENV Varible#
 

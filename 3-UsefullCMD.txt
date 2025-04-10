@@ -6,3 +6,5 @@ python manage.py runserver
 python manage.py runserver --settings=NeuroRecon.settings0
 python manage.py runserver --settings=NeuroRecon.settings_Prod
 python manage.py createsuperuser --settings=NeuroRecon.settings0
+
+set DJANGO_SETTINGS_MODULE=NeuroRecon.settings  in unix&ps

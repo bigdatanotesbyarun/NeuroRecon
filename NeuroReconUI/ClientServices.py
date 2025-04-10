@@ -13,9 +13,16 @@ def get_kafka_data(request):
             
             # Hardcoded JSON data for the response
             response_data = {
-                "SMCP": "9999",
-                "Status": "Active",
-                "Isin": "1111",
+               "OrderId": 111,
+                "OrderName": "AC",
+                "OrderPrice": 10000,
+                "OrderDate": "2025-04-10T14:30:00.123",
+                "OrderType": "Electronic",
+                "AddressLine1": "UP",
+                "PinCode": 210120,
+                "State": "UP",
+                "District": "Pune",
+                "PhoneNumber": 0000000000
             }
             # Return the hardcoded JSON data as a response
             return JsonResponse(response_data, status=200)
@@ -35,9 +42,16 @@ def get_gemfire_data(request):
             # response = requests.post(external_api_url, json=incoming_data, headers=headers)
             # return JsonResponse(response.json(), status=response.status_code)
             response_data = {
-                 "SMCP": "9999",
-                 "Status": "Active",
-                "Isin": "1111",
+                 "OrderId": 111,
+                "OrderName": "AC",
+                "OrderPrice": 10000,
+                "OrderDate": "2025-04-10T14:30:00.123",
+                "OrderType": "Electronic",
+                "AddressLine1": "UP",
+                "PinCode": 210120,
+                "State": "UP",
+                "District": "Pune",
+                "PhoneNumber": 0000000000
             }
             # Return the hardcoded JSON data as a response
             return JsonResponse(response_data, status=200)
@@ -55,9 +69,16 @@ def get_cloud_data(request):
             # response = requests.post(external_api_url, json=incoming_data, headers=headers)
             # return JsonResponse(response.json(), status=response.status_code)
             response_data = {
-                "SMCP": "9999",
-                "Status": "Active",
-                "Isin": "1111",
+                "OrderId": 111,
+                "OrderName": "AC",
+                "OrderPrice": 10000,
+                "OrderDate": "2025-04-10T14:30:00.123",
+                "OrderType": "Electronic",
+                "AddressLine1": "UP",
+                "PinCode": 210120,
+                "State": "UP",
+                "District": "Pune",
+                "PhoneNumber": 0000000000
             }
             # Return the hardcoded JSON data as a response
             return JsonResponse(response_data, status=200)
@@ -74,10 +95,17 @@ def get_impala_data(request):
             # headers = {"Content-Type": "application/json"}
             # response = requests.post(external_api_url, json=incoming_data, headers=headers)
             # return JsonResponse(response.json(), status=response.status_code)
-            response_data = {
-                "SMCP": "9999",
-                "Status": "Active",
-                "Isin": "1111",
+            response_data =  {
+                "OrderId": 111,
+                "OrderName": "AC",
+                "OrderPrice": 10000,
+                "OrderDate": "2025-04-10T14:30:00.123",
+                "OrderType": "Electronic",
+                "AddressLine1": "UP",
+                "PinCode": 210120,
+                "State": "UP",
+                "District": "Pune",
+                "PhoneNumber": 0000000000
             }
             # Return the hardcoded JSON data as a response
             return JsonResponse(response_data, status=200)

@@ -10,6 +10,12 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('get_recon_data/', views.get_recon_data, name='get_recon_data'),
     path('get_recon_result/', views.get_recon_result, name='get_recon_result'),
+   
+    path('get_recon_result/<str:req_id>/', views.get_recon_result, name='get_recon_result'),
+    path('get_recon_result/', views.get_recon_result, name='get_recon_result_all'),
+
+
+
     path('save_recon_data/', views.save_recon_data, name='save_recon_data'),
     path('get_regioncount_data/', views.get_regioncount_data, name='get_regioncount_data'),
     path('get_skrecon_data/', views.get_skrecon_data, name='get_skrecon_data'),

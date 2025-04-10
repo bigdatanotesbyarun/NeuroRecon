@@ -28,7 +28,7 @@ payload = {
     }
 
 
-@api_view(['GET'])
+
 def audit(request):
     env=settings.ENV
    
@@ -40,16 +40,15 @@ def audit(request):
         base_url ="http://13.48.57.113:8000"
         print("In Development Environment")
 
-    url_json1 = f"{base_url}/get_cloud_data/"
-    url_json2 = f"{base_url}/get_kafka_data/"
-    url_json3 = f"{base_url}/get_impala_data/"
-    url_json4 = f"{base_url}/get_gemfire_data/"
+   
+    url_json1 = f"{base_url}/get_kafka_data/"
+    url_json2 = f"{base_url}/get_impala_data/"
+    url_json3 = f"{base_url}/get_gemfire_data/"
 
 
     json1_data = fetch_json_from_api(url_json1, payload)
     json2_data = fetch_json_from_api(url_json2, payload)
     json3_data = fetch_json_from_api(url_json3, payload)
-    json4_data = fetch_json_from_api(url_json4, payload)
     print(json1_data);
 
 

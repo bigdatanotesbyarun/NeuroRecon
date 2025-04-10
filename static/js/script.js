@@ -186,35 +186,51 @@
     //         // Other DataTables options...
     //       });
     //     }
-    function showRequestData2() {
+    function showRequestData2(reconId) {
         hideElements("hide");
         document.getElementById('requestTable').style.display = 'block';
+        var url = reconId ? "/get_recon_result/" + reconId + "/" : "/get_recon_result/";
         $.ajax({
-            url: "/get_recon_result/",
+            url: url,
             type: "GET",
             success: function (response) {
                 let tableBody = $("#requestDataTable tbody");
                 tableBody.empty();
                 
-                response.forEach(ReconResult => {
-                    let row = `<tr>
-s                       <td>${ReconResult.RequestID}</td>
-                        <td>${ReconResult.JoinKey}</td>
-                        <td>${ReconResult.FieldName}</td>
-                        <td>${ReconResult.Kafka}</td>
-                        <td>${ReconResult.Impala}</td>
-                        <td>${ReconResult.Gemfire}</td>
-                        <td>${ReconResult.ReconStatus}</td>
-                        <td>${ReconResult.env}</td>
-                    </tr>`;
-                    tableBody.append(row);
-                });
-
+                if (response && response.length === 0) {
+                    tableBody.append("<tr><td colspan='8' style='text-align: center;'>No records found for the provided reqId.</td></tr>");
+                } else if (response && response.message && response.message === "No data found for the provided reqId.") {
+                    // If the server returns the "No data found" message
+                    tableBody.append(`
+                        <tr>
+                            <td colspan="8" style="text-align: center;">
+                                <span style="color: red; font-family: 'Arial', sans-serif; font-weight: bold; font-size: 16px;">
+                                 !! Sorry No Record Found for the provided Req. It might be under process !!
+                                </span>
+                            </td>
+                        </tr>
+                    `);   
+                } else {
+                    response.forEach(ReconResult => {
+                        let row = `<tr>
+                            <td>${ReconResult.RequestID}</td>
+                            <td>${ReconResult.JoinKey}</td>
+                            <td>${ReconResult.FieldName}</td>
+                            <td>${ReconResult.Kafka}</td>
+                            <td>${ReconResult.Impala}</td>
+                            <td>${ReconResult.Gemfire}</td>
+                            <td>${ReconResult.ReconStatus}</td>
+                            <td>${ReconResult.env}</td>
+                        </tr>`;
+                        tableBody.append(row);
+                    });
+                }
+    
                 // Destroy existing DataTable instance before re-initializing
                 if ($.fn.DataTable.isDataTable("#requestDataTable")) {
                     $("#requestDataTable").DataTable().destroy();
                 }
-
+    
                 // Initialize DataTable with sorting, filtering, pagination & export
                 $("#requestDataTable").DataTable({
                     dom: 'Bfrtip',
@@ -232,8 +248,7 @@ s                       <td>${ReconResult.RequestID}</td>
             }
         });
     }
-
-
+    
 
 
    $(document).ready(function () {
@@ -254,7 +269,7 @@ s                       <td>${ReconResult.RequestID}</td>
                 
                 response.forEach(ReconVO => {
                     let row = `<tr>
-                        <td><a href="#" onclick="showRequestData2()">${ReconVO.reqId}</a></td>
+                        <td><a href="#" onclick="showRequestData2('${ReconVO.reqId}')">${ReconVO.reqId}</a></td>
                         <td>${ReconVO.name}</td>
                         <td>${ReconVO.created}</td>
                         <td>${ReconVO.tblName}</td>

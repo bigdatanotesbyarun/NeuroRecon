@@ -124,10 +124,25 @@ def get_jobs_data(request):
         serializer=JobsItemSerializer(recon,many=True)
         return Response(serializer.data);
 
+
 @api_view(['GET'])
-def get_recon_result(request):
-        recon=ReconResult.objects.all()
-        serializer=ReconResultItemSerializer(recon,many=True)
-        return Response(serializer.data);
+def get_recon_result(request, req_id=None):
+    """
+    This view retrieves ReconResult data for a specific reqId or all data if no reqId is provided.
+    """
+    try:
+        if req_id:
+            recon = ReconResult.objects.filter(RequestID=req_id)  # Filter by the provided reqId
+        else:
+            recon = ReconResult.objects.all()  # If no reqId is provided, return all results
+
+        if not recon.exists():
+            return Response({'message': 'No data found for the provided reqId.'}, status=200)
+
+        serializer = ReconResultItemSerializer(recon, many=True)
+        return Response(serializer.data)
+
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
 
 
