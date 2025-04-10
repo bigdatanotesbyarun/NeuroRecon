@@ -639,7 +639,7 @@
                 <div id="wrapper"></div>
             </div>
         
-            <div id="requestTable" style="display: none;" class="hide">
+            <!-- <div id="requestTable" style="display: none;" class="hide">
                 <p style="font-size: 16px; font-weight: bold; text-align: center;color: #2c3e50; margin-bottom: 20px;">ReconData</p>
                 <div class="table-container">
                             <table id="requestDataTable" class="display">
@@ -659,7 +659,37 @@
                                         </tbody>
                             </table>
                 </div>
+            </div> -->
+
+            <div id="requestTable" style="display: none;" class="hide">
+                <p style="font-size: 16px; font-weight: bold; text-align: center;color: #2c3e50; margin-bottom: 20px;">ReconData</p>
+                <div class="table-container">
+                    <table id="requestDataTable" class="display">
+                        <thead>
+                            <tr>
+                                <th>RequestID</th>
+                                <th>
+                                    JoinKey
+                                    <i id="filterIcon" class="fa fa-filter" style="cursor: pointer; margin-left: 10px;"></i>
+                                    <input id="filterInput" type="text" style="display:none; margin-left: 10px;">
+                                </th>
+                                <th>Attribute
+                                    <i id="filterIconAttribute" class="fa fa-filter" style="cursor: pointer; margin-left: 10px;"></i>
+                                    <input id="filterInputAttribute" type="text" placeholder="Filter Attribute" style="display:none; margin-left: 10px;">
+                                </th>
+                                <th>Kafka</th>
+                                <th>Impala</th>
+                                <th>Gemfire</th>
+                                <th>ReconStatus</th>
+                                <th>Env</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+            
 
             <div id="requestTable2" style="display: none;" class="hide">
                 <p style="font-size: 16px; font-weight: bold; text-align: center;color: #2c3e50; margin-bottom: 20px;">ReconHistory</p>

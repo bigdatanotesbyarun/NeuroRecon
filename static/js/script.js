@@ -186,10 +186,98 @@
     //         // Other DataTables options...
     //       });
     //     }
+    // function showRequestData2(reconId) {
+    //     hideElements("hide");
+    //     document.getElementById('requestTable').style.display = 'block';
+    //     var url = reconId ? "/get_recon_result/" + reconId + "/" : "/get_recon_result/";
+    //     $.ajax({
+    //         url: url,
+    //         type: "GET",
+    //         success: function (response) {
+    //             let tableBody = $("#requestDataTable tbody");
+    //             tableBody.empty();
+                
+    //             if (response && response.length === 0) {
+    //                 tableBody.append("<tr><td colspan='8' style='text-align: center;'>No records found for the provided reqId.</td></tr>");
+    //             } else if (response && response.message && response.message === "No data found for the provided reqId.") {
+    //                 // If the server returns the "No data found" message
+    //                 tableBody.append(`
+    //                     <tr>
+    //                         <td colspan="8" style="text-align: center;">
+    //                             <span style="color: red; font-family: 'Arial', sans-serif; font-weight: bold; font-size: 16px;">
+    //                              !! Sorry No Record Found for the provided Req. It might be under process !!
+    //                             </span>
+    //                         </td>
+    //                     </tr>
+    //                 `);   
+    //             } else {
+    //                 response.forEach(ReconResult => {
+    //                     let statusColor = (ReconResult.ReconStatus === "Match") ? 'green' : 'red';
+    //                     let row = `<tr>
+    //                         <td>${ReconResult.RequestID}</td>
+    //                         <td>${ReconResult.JoinKey}</td>
+    //                         <td>${ReconResult.FieldName}</td>
+    //                         <td>${ReconResult.Kafka}</td>
+    //                         <td>${ReconResult.Impala}</td>
+    //                         <td>${ReconResult.Gemfire}</td>
+    //                        <td style="color: ${statusColor}; font-weight: bold;">${ReconResult.ReconStatus}</td>
+    //                         <td>${ReconResult.env}</td>
+    //                     </tr>`;
+    //                     tableBody.append(row);
+    //                 });
+    //             }
+    
+    //             // Destroy existing DataTable instance before re-initializing
+    //             if ($.fn.DataTable.isDataTable("#requestDataTable")) {
+    //                 $("#requestDataTable").DataTable().destroy();
+    //             }
+    
+    //             // Initialize DataTable with sorting, filtering, pagination & export
+    //             $("#requestDataTable").DataTable({
+    //                 dom: 'Bfrtip',
+    //                 buttons: [
+    //                     { extend: 'excelHtml5', text: 'ExportExcel', className: 'btn-export btn-excel' }
+    //                 ],
+    //                 paging: true,      // Enable pagination
+    //                 searching: true,   // Enable search filter
+    //                 ordering: true,    // Enable sorting
+    //                 responsive: true,  // Enable responsive design
+    //             });
+
+    //             $('#filterIcon').on('click', function() {
+    //                 // Toggle the input field for filtering
+    //                 $('#filterInput').toggle();
+    //             });
+
+    //             // Filter table based on input value
+    //             $('#filterInput').on('input', function() {
+    //                 var filterValue = $(this).val();
+    //                 dataTable.column(1).search(filterValue).draw(); // Column 1 is the JoinKey column
+    //             });
+
+    //             $('#filterIconAttribute').on('click', function() {
+    //                 $('#filterInputAttribute').toggle();
+    //             });
+
+    //             // Filter Attribute column
+    //             $('#filterInputAttribute').on('input', function() {
+    //                 var filterValue = $(this).val();
+    //                 dataTable.column(2).search(filterValue).draw(); // Column 2 is Attribute
+    //             });
+
+
+    //         },
+    //         error: function () {
+    //             alert("Error fetching data!");
+    //         }
+    //     });
+    // }
+    
     function showRequestData2(reconId) {
         hideElements("hide");
         document.getElementById('requestTable').style.display = 'block';
         var url = reconId ? "/get_recon_result/" + reconId + "/" : "/get_recon_result/";
+    
         $.ajax({
             url: url,
             type: "GET",
@@ -212,6 +300,7 @@
                     `);   
                 } else {
                     response.forEach(ReconResult => {
+                        let statusColor = (ReconResult.ReconStatus === "Match") ? 'green' : 'red';
                         let row = `<tr>
                             <td>${ReconResult.RequestID}</td>
                             <td>${ReconResult.JoinKey}</td>
@@ -219,7 +308,7 @@
                             <td>${ReconResult.Kafka}</td>
                             <td>${ReconResult.Impala}</td>
                             <td>${ReconResult.Gemfire}</td>
-                            <td>${ReconResult.ReconStatus}</td>
+                            <td style="color: ${statusColor}; font-weight: bold;">${ReconResult.ReconStatus}</td>
                             <td>${ReconResult.env}</td>
                         </tr>`;
                         tableBody.append(row);
@@ -232,7 +321,7 @@
                 }
     
                 // Initialize DataTable with sorting, filtering, pagination & export
-                $("#requestDataTable").DataTable({
+                let dataTable = $("#requestDataTable").DataTable({
                     dom: 'Bfrtip',
                     buttons: [
                         { extend: 'excelHtml5', text: 'ExportExcel', className: 'btn-export btn-excel' }
@@ -240,8 +329,34 @@
                     paging: true,      // Enable pagination
                     searching: true,   // Enable search filter
                     ordering: true,    // Enable sorting
-                    responsive: true,  // Enable responsive design
+                    responsive: true,
+                    columnDefs: [
+                        { orderable: false, targets: [1, 2] }  // Disable sorting for JoinKey (column 1) and FieldName (column 2)
+                    ]  // Enable responsive design
                 });
+    
+                // Toggle JoinKey filter input visibility
+                $('#filterIcon').on('click', function() {
+                    $('#filterInput').toggle(); // Show/hide the input field
+                });
+    
+                // Filter table based on input value for JoinKey
+                $('#filterInput').on('input', function() {
+                    var filterValue = $(this).val();
+                    dataTable.column(1).search(filterValue).draw(); // Column 1 is the JoinKey column
+                });
+    
+                // Toggle Attribute filter input visibility
+                $('#filterIconAttribute').on('click', function() {
+                    $('#filterInputAttribute').toggle(); // Show/hide the input field
+                });
+    
+                // Filter Attribute column
+                $('#filterInputAttribute').on('input', function() {
+                    var filterValue = $(this).val();
+                    dataTable.column(2).search(filterValue).draw(); // Column 2 is Attribute column
+                });
+    
             },
             error: function () {
                 alert("Error fetching data!");
@@ -249,7 +364,6 @@
         });
     }
     
-
 
    $(document).ready(function () {
     $("#loadHistory").click(function (event) {
@@ -268,6 +382,7 @@
                 tableBody.empty();
                 
                 response.forEach(ReconVO => {
+                    let statusColor = (ReconVO.field6 === "Completed") ? 'green' : 'red';
                     let row = `<tr>
                         <td><a href="#" onclick="showRequestData2('${ReconVO.reqId}')">${ReconVO.reqId}</a></td>
                         <td>${ReconVO.name}</td>
@@ -277,7 +392,7 @@
                         <td>${ReconVO.temporal}</td>
                         <td>${ReconVO.batch}</td>
                         <td>${ReconVO.field2}</td>
-                        <td>${ReconVO.field6}</td>
+                        <td style="color: ${statusColor}; font-weight: bold;">${ReconVO.field6}</td>
                     </tr>`;
                     tableBody.append(row);
                 });

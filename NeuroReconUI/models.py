@@ -105,14 +105,14 @@ class Jobs(models.Model):
     executionTime=models.CharField(max_length=1000,default="Test")
 
 class ReconResult(models.Model):
-    JoinKey=models.CharField(max_length=1000)
-    FieldName=models.CharField(max_length=1000)
-    Kafka=models.CharField(max_length=1000)
-    Impala=models.CharField(max_length=1000)
-    Gemfire=models.CharField(max_length=1000)
-    ReconStatus=models.CharField(max_length=1000)
-    RequestID=models.CharField(max_length=1000)
-    env=models.CharField(max_length=1000,default="Test")
+    JoinKey = models.CharField(max_length=1000)  # Allow null and blank values
+    FieldName = models.CharField(max_length=1000, null=True, blank=True)
+    Kafka = models.CharField(max_length=1000, null=True, blank=True)
+    Impala = models.CharField(max_length=1000, null=True, blank=True)
+    Gemfire = models.CharField(max_length=1000, null=True, blank=True)
+    ReconStatus = models.CharField(max_length=1000, null=True, blank=True)
+    RequestID = models.CharField(max_length=1000, null=True, blank=True)
+    env = models.CharField(max_length=1000, default="Test")
     class Meta:
         db_table = 'neuroreconui_reconresult' 
   
