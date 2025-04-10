@@ -261,7 +261,7 @@ s                       <td>${ReconResult.RequestID}</td>
                         <td>${ReconVO.pipeline}</td>
                         <td>${ReconVO.temporal}</td>
                         <td>${ReconVO.batch}</td>
-                        <td>${ReconVO.env}</td>
+                        <td>${ReconVO.field2}</td>
                         <td>${ReconVO.field6}</td>
                     </tr>`;
                     tableBody.append(row);
@@ -854,3 +854,60 @@ document.addEventListener('DOMContentLoaded', function () {
       content.classList.toggle('sidebar-hidden');
     });
 });
+
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const voiceBtn = document.getElementById("voice-btn");
+        const micIcon = voiceBtn.querySelector("i");
+        const chatInput = document.getElementById("chat-input");
+
+        let recognition;
+
+        // Setup recognition once
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                chatInput.value = transcript;
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Speech recognition error:", event.error);
+                alert("Speech recognition error: " + event.error);
+            };
+
+            recognition.onend = () => {
+                // Revert button state
+                voiceBtn.classList.remove("listening");
+                micIcon.classList.remove("fa-microphone-lines");
+                micIcon.classList.add("fa-microphone");
+            };
+        } else {
+            alert("Your browser doesn't support speech recognition.");
+        }
+
+        // Press and hold to speak
+        voiceBtn.addEventListener("mousedown", () => {
+            if (!recognition) return;
+
+            recognition.start();
+            voiceBtn.classList.add("listening");
+            micIcon.classList.remove("fa-microphone");
+            micIcon.classList.add("fa-microphone-lines");
+        });
+
+        // Release to stop and convert
+        voiceBtn.addEventListener("mouseup", () => {
+            if (!recognition) return;
+
+            recognition.stop();
+            // Icon/class reset happens in `onend`
+        });
+    });
+

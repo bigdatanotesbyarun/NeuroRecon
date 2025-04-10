@@ -91,7 +91,7 @@ class ReconVO(models.Model):
     field3=models.CharField(max_length=1000,default='test')
     field4=models.CharField(max_length=1000,default='test')
     field5=models.CharField(max_length=1000,default='test')
-    field6=models.CharField(max_length=1000,default='test')
+    field6=models.CharField(max_length=1000,default='InProgress')
 
 
 class Jobs(models.Model):

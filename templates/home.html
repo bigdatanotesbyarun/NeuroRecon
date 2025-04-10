@@ -6,7 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8">
         <title>Reconciliation</title>
         <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' >
-        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
@@ -209,24 +210,28 @@
         </div>
         
             
-            <div id="chat-container" class="chat-container hide">
-                <div class="chat-header">
-                    <span>ChatBoat</span>
-                    
-            <button class="seg-btn selectedOption" data-value="SQL">SQL</button>
-            <button class="seg-btn " data-value="PDF">PDF</button>
-            <button class="seg-btn" data-value="JSON">JSON</button>
-            <button class="seg-btn" data-value="EXCEL">EXCEL</button>
-                    <button id="close-chat" class="close-btn1">✖</button>
-                </div>
-                <div id="chat-body" class="chat-body">
-                    <div class="bot-message">Hello! How can I assist you today? 😊</div>
-                </div>
-                <div class="chat-footer">
-                    <input type="text" id="chat-input" placeholder="Type a message...">
-                    <button id="send-message">➤</button>
-                </div>
+        <div id="chat-container" class="chat-container hide">
+            <div class="chat-header">
+                <span>ChatBoat</span>
+        
+                <button class="seg-btn selectedOption" data-value="SQL">SQL</button>
+                <button class="seg-btn" data-value="PDF">PDF</button>
+                <button class="seg-btn" data-value="JSON">JSON</button>
+                <button class="seg-btn" data-value="EXCEL">EXCEL</button>
+                <button id="close-chat" class="close-btn1">✖</button>
             </div>
+            <div id="chat-body" class="chat-body">
+                <div class="bot-message">Hello! How can I assist you today? 😊</div>
+            </div>
+            <div class="chat-footer">
+                <input type="text" id="chat-input" placeholder="Type a message...">
+                <button id="send-message">➤</button>
+                <button id="voice-btn" title="Speak">
+                    <i class="fas fa-microphone"></i>
+                </button>
+             
+            </div>
+        </div>
 
             
             <div id="form1" class="form-container hide" style="display: none;">
@@ -256,8 +261,8 @@
                         <div class="field-container">
                             <label for="temporalLbl">Temporal</label>
                             <select id="temporal" name="temporal">
-                                <option value="Type1" selected>Type1</option>
-                                <option value="Type2">Type2</option>
+                                <option value="TYPE1" selected>TYPE1</option>
+                                <option value="TYPE2-SCD2">TYPE2-SCD2</option>
                             </select>
                         </div>
                         
@@ -290,49 +295,42 @@
                         
                         
                         <div class="field-container">
-                            <label for="field1">Field1</label>
-                            <select id="field1" name="field1">
-                                <option value="Type1" selected>ABC</option>
-                                <option value="Type2">XYZ</option>
-                            </select>
+                            <label for="field1">FilePath</label>
+                            <input type="text" id="field1" name="date" value="/home/">
                         </div>
                         <div class="field-container">
-                            <label for="field2">Field2</label>
+                            <label for="field2">Env</label>
                             <select id="field2" name="field2">
-                                <option value="Type1" selected>ABC</option>
-                                <option value="Type2">XYZ</option>
+                                <option value="PROD" selected>PROD</option>
+                                <option value="COB" selected>COB</option>
+                                <option value="UAT" selected>UAT</option>
                             </select>
                         </div>
                         
                         <div class="field-container">
-                            <label for="field3">Field3</label>
+                            <label for="field3">Recon</label>
                             <select id="field3" name="field3">
-                                <option value="Type1" selected>ABC</option>
-                                <option value="Type2">XYZ</option>
+                                <option value="SingleRecon" selected>SingleRecon</option>
+                                <option value="BulkRecon">BulkRecon</option>
                             </select>
                         </div>
                         <div class="field-container">
-                            <label for="field4">Field4</label>
+                            <label for="field4">FilePattern</label>
                             <select id="field4" name="field4">
-                                <option value="Type1" selected>ABC</option>
-                                <option value="Type2">XYZ</option>
+                                <option value="JSON" selected>JSON</option>
+                                <option value="CSV">CSV</option>
+                                <option value="EXCEL">EXCEL</option>
                             </select>
                         </div>
                         
                         <div class="field-container">
-                            <label for="field5">Field5</label>
-                            <select id="field5" name="field5">
-                                <option value="Type1" selected>ABC</option>
-                                <option value="Type2">XYZ</option>
-                            </select>
+                            <label for="field5">Jira</label>
+                            <input type="text" id="field5" name="date" value="C12345-55555">
                         </div>
 
                         <div class="field-container">
-                            <label for="field6">Field6</label>
-                            <select id="field6" name="field6">
-                                <option value="Type1" selected>ABC</option>
-                                <option value="Type2">XYZ</option>
-                            </select>
+                            <label for="field6">FileSuffix</label>
+                            <input type="text" id="field6" name="date" value="*.Product.json">
                         </div>
                         
                     </div>
@@ -340,12 +338,12 @@
                     <div class="form-fields">
                         <div class="field-container">
                             <label for="startOffSet">Start Offset</label>
-                            <input type="text" id="startOffSet" name="startOffSet" placeholder="1:1000,2:1000,3:1000">
+                            <input type="text" id="startOffSet" name="startOffSet" value="1:1000,2:1000,3:1000",placeholder="1:1000,2:1000,3:1000">
                         </div>
                         
                         <div class="field-container">
                             <label for="endOffSet">End Offset</label>
-                            <input type="text" id="endOffSet" name="endOffSet" placeholder="1:5000,2:5000,3:5000">
+                            <input type="text" id="endOffSet" name="endOffSet" value="1:1000,2:1000,3:1000",placeholder="1:5000,2:5000,3:5000">
                         </div>
                     </div>
             
