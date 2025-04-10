@@ -1,9 +1,10 @@
 from django.urls import path
-from . import ChatExcel,views,Chat,ClientServices,Chart,ChatDB,Recon
+from . import ChatExcel,views,Chat,ClientServices,Chart,ChatDB,Recon,FileUpload
 
 
 urlpatterns = [
     path('home/', views.home,name="home"),
+     path('upload-file/', FileUpload.handle_file_upload, name='upload_file'),
     path('audit/',Recon.audit, name='audit'),
     path('logout/', views.logout_view, name='logout'),
     path('login/', views.login_view, name='login'),

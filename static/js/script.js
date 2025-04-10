@@ -911,3 +911,63 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    document.addEventListener("DOMContentLoaded", function () {
+        const uploadBtn = document.getElementById("bt8");
+        const form = document.getElementById("formId8");
+    
+        uploadBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+    
+            const formData = new FormData();
+    
+            const env = document.getElementById("env").value;
+            const entity = document.getElementById("entity").value;
+            const filePath = document.getElementById("filePath").value;
+            const fileType = document.getElementById("fileType").value;
+            const fileInput = document.getElementById("id_file");
+            const file = fileInput.files[0];
+    
+            if (!file) {
+                alert("Please select a file before uploading.");
+                return;
+            }
+    
+            formData.append("env", env);
+            formData.append("entity", entity);
+            formData.append("filePath", filePath);
+            formData.append("fileType", fileType);
+            formData.append("file", file);
+            const csrftoken = getCookie('csrftoken');
+            // const csrftoken = getCookie('csrftoken');
+            // fetch(saveUserDataUrl, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'X-CSRFToken': csrftoken
+            //     },
+            //     body: jsonData
+            // })
+
+
+            fetch("/upload-file/", {
+                method: "POST",
+                headers: { 'X-CSRFToken': csrftoken
+                },
+                body: formData,
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        alert("File uploaded successfully.");
+                        form.reset();
+                    } else {
+                        alert("Upload failed: " + data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Upload error:", error);
+                    alert("Error uploading file.");
+                });
+        });
+    });
+    

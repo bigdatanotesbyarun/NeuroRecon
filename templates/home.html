@@ -126,7 +126,7 @@
 
 <header class="main-header">
     <span class="menu-icon" id="menuToggle">&#9776;</span>
-    <div  class="header-content" style="font-weight: 100;">NeuroRecon</div>
+    <div  class="header-content" style="font-weight: 100;">RefRecon</div>
   
     <div class="header-content">
         <nav class="nav-links">
@@ -767,6 +767,61 @@
                                         </tbody>
                             </table>
                 </div>
+            </div>
+
+
+
+            <div id="form8" class="form-container hide" style="display: none;">
+                <span style="color: #000000;  font-family: 'Arial', sans-serif; font-weight:bold">FileUpload</span>
+                <form id="formId8">
+                    <div class="form-fields">
+                        
+                        
+                        <div class="field-container">
+                            <label for="tblNameLbl">Env</label>
+                            <select id="env" name="tblName">
+                                <option value="A">Prod</option>
+                                <option value="B">Cob</option>
+                            </select>
+                        </div>
+
+                        <div class="field-container">
+                            <label for="tblNameLbl">Entity</label>
+                            <select id="entity" name="tblName">
+                                <option value="Product">Product</option>
+                                <option value="Party">Party</option>
+                                <option value="Account">Account</option>
+                                <option value="Account">DataModel</option>
+                            </select>
+                        </div>
+
+                         
+                        <div>
+                            <label for="FilePath">FilePath</label>
+                            <input type="text" id="filePath" name="filePath" size="43"> 
+                        </div>
+                        
+                        <div class="field-container">
+                            <label for="tblNameLbl">FileType</label>
+                            <select id="fileType" name="fileType">
+                                <option value="JSON">JSON</option>
+                                <option value="CSV">CSV</option>
+                                <option value="EXCEL">EXCEL</option>
+                            </select>
+                        </div>
+                       
+                        
+                        <div>
+                            <span style="color: #000000; font-family: 'Arial', sans-serif; font-weight:bold">File:</span>
+                            <input type="file" name="file" id="id_file" required>
+                        </div>
+
+                        <div class="button-row">
+                            <button type="button" id="bt8">Upload</button>
+                            <button type="reset">Reset</button>
+                        </div>
+                    </div>
+                </form>
             </div>
     </div>
 </body>
