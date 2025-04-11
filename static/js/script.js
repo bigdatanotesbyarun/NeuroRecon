@@ -1028,13 +1028,25 @@ function renderChart(chartId, chartData) {
         },
         scales: {
             y: {
+                grid: {
+                    display: false  // Disable the grid lines on the x-axis
+                },
                 ticks: {
                     callback: function(value) {
                         if (value >= 1000) {
                             return value / 1000 + 'K';  // Format the y-axis as 'K'
                         }
                         return value;
-                    }
+                    },
+                    display: true 
+                }
+            },
+            x: {
+                grid: {
+                    display: false  // Disable the grid lines on the x-axis
+                },
+                ticks: {
+                    display: true  // Optionally keep ticks if you need them
                 }
             }
         }
@@ -1048,7 +1060,7 @@ function renderChart(chartId, chartData) {
             labels: chartData.labels,  // Use the labels from the API
             datasets: [{
                 data: chartData.datasets[0].data,  // Use the data from the API
-                backgroundColor: ["#1a53ff", "#b30000", "#ea5545"], // Add colors as needed
+                backgroundColor: ["#007bff", "#28a745", "#ffc107"],
                 borderColor: "#fff",
                 borderWidth: 1
             }]
