@@ -1048,7 +1048,7 @@ function renderChart(chartId, chartData) {
             labels: chartData.labels,  // Use the labels from the API
             datasets: [{
                 data: chartData.datasets[0].data,  // Use the data from the API
-                backgroundColor: ["#007bff", "#28a745", "#ffc107"], // Add colors as needed
+                backgroundColor: ["#1a53ff", "#b30000", "#ea5545"], // Add colors as needed
                 borderColor: "#fff",
                 borderWidth: 1
             }]
