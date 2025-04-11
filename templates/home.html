@@ -157,6 +157,14 @@
            
         </nav>
     </div>
+
+    <div class="user-welcome-left" style="float: left; margin-left: 20px;">
+        {% if user.is_authenticated %}
+            <span> {{ user.username }}</span>
+        {% else %}
+            <span>Welcome, Guest!</span>
+        {% endif %}
+    </div>
 </header>
 
 <body>

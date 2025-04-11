@@ -189,3 +189,10 @@ button[type="reset"]:hover {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.user-welcome-left {
+    font-size: 16px;
+    /*font-weight: bold; */
+    color: white; /* Change this to your preferred color */
+    margin-left: 20px; /* Add spacing to the left of the username */
+}
