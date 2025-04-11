@@ -176,7 +176,7 @@ def recon(reconvo):
 
     # Initialize Spark session
 
-    jarf = os.path.join(BASE_DIR, 'Jar', 'postgresql-42.7.5.jar')
+    jarf = os.path.join(BASE_DIR, 'Jars', 'postgresql-42.7.5.jar')
     
     spark = SparkSession.builder.appName('JsonComparison').master('local[*]').config("spark.jars",jarf).enableHiveSupport().getOrCreate()
 
