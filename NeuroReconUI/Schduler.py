@@ -105,7 +105,7 @@ def fetch_json_from_api(url, payload):
 
 def recon(reconvo):
     # Load the Excel file and sheet
-    excel_file = 'Staging\\DataModel\\ProductDataModel.xlsx'  # Path to your uploaded Excel file
+    #excel_file = 'Staging\\DataModel\\ProductDataModel.xlsx'  # Path to your uploaded Excel file
     excel_file = os.path.join(BASE_DIR, 'Staging', 'DataModel', 'ProductDataModel.xlsx')
     df = pd.read_excel(excel_file)
 
@@ -175,8 +175,10 @@ def recon(reconvo):
 
 
     # Initialize Spark session
-    spark = SparkSession.builder.appName('JsonComparison').master('local[*]').config(
-        "spark.jars", "NeuroReconUI\\Jar\\postgresql-42.7.5.jar").enableHiveSupport().getOrCreate()
+
+    jarf = os.path.join(BASE_DIR, 'Jar', 'postgresql-42.7.5.jar')
+    
+    spark = SparkSession.builder.appName('JsonComparison').master('local[*]').config("spark.jars",jarf).enableHiveSupport().getOrCreate()
 
     # Convert the final dataset (list of dictionaries) to Spark DataFrame using the defined schema
     final_spark_df = spark.createDataFrame(final_dataset, schema)
