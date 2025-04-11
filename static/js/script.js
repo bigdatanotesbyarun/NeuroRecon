@@ -1059,6 +1059,8 @@ function renderChart(chartId, chartData) {
     // Create the chart using the passed data and chartId
     new Chart(document.getElementById(chartId), {
         type: "bar",  // Type of chart (bar)
+        chartData : chartData.datasets[0].data.map(value => (value === undefined || value === null) ? 0 : value),
+        labels : chartData.labels.map(label => label || 'No Label'),
         data: {
             labels: chartData.labels,  // Use the labels from the API
             datasets: [{
