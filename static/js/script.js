@@ -1020,6 +1020,9 @@ function renderChart(chartId, chartData) {
                     weight: 'bold',
                     size: 14
                 },
+                legend: {
+                    display: false  // Disable the legend (the tab color)
+                },
                 color: 'black',
                 formatter: function(value) {
                     return value / 1000 + 'K';  // Format the value as 'K'
