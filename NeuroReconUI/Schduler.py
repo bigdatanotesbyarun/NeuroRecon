@@ -90,6 +90,7 @@ start_monitoring()
 def fetch_json_from_api(url, payload):
     headers = {
         'Content-Type': 'application/json',
+        
     }
     response = requests.post(url, json=payload, headers=headers)
     if response.status_code == 200:

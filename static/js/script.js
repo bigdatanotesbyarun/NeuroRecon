@@ -292,7 +292,7 @@
                     tableBody.append(`
                         <tr>
                             <td colspan="8" style="text-align: center;">
-                                <span style="color: red; font-family: 'Arial', sans-serif; font-weight: bold; font-size: 16px;">
+                                <span style="color: red; font-family: 'Arial', sans-serif; font-weight: bold; font-size: 14px;">
                                  !! Sorry No Record Found for the provided Req. It might be under process !!
                                 </span>
                             </td>

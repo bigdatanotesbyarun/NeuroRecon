@@ -30,20 +30,12 @@ payload = {
 
 
 def audit(request):
-    env=settings.ENV
-   
     
-    if env == 'LOCAL':
-        base_url = "http://localhost:8000"
-        print("In Production Environment")
-    else:
-        base_url ="http://13.48.57.113:8000"
-        print("In Development Environment")
 
    
-    url_json1 = f"{base_url}/get_kafka_data/"
-    url_json2 = f"{base_url}/get_impala_data/"
-    url_json3 = f"{base_url}/get_gemfire_data/"
+    url_json1 = "/get_kafka_data/"
+    url_json2 = "/get_impala_data/"
+    url_json3 = "/get_gemfire_data/"
 
 
     json1_data = fetch_json_from_api(url_json1, payload)

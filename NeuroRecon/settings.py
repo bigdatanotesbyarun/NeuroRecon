@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+
+load_dotenv(os.environ.get('ENV_FILE', 'prod.env'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -90,11 +94,17 @@ GOOGLE_API_KEY='AIzaSyDLsN1tJQWw00Eh57Rnw_tLLH5VfN5DFkk'
 ENV='LOCAL'
 DATABASES = {
     'default': {
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME':'telusko',
+        # 'USER' :'postgres',
+        # 'PASSWORD':'1234',
+        # 'HOST':'localhost'
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'telusko',
-        'USER' :'postgres',
-        'PASSWORD':'1234',
-        'HOST':'localhost'
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
 
