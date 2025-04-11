@@ -10,7 +10,7 @@ def chart1(request):
         "labels": ["Product", "Party", "Account"],
         "datasets": [
             {
-                "data": [650000, 590000, 800000]
+                "data": [657689, 590978, 846789]
             }
         ]
     }
@@ -22,7 +22,7 @@ def chart2(request):
        "labels": ["Product", "Party", "Account"],
         "datasets": [
             {
-                "data": [1200000, 800000, 950000]
+                "data": [456723, 987611, 129990]
             }
         ]
     }
@@ -34,7 +34,7 @@ def chart3(request):
         "labels": ["SMCP", "ACTI", "PARTYI"],
         "datasets": [
             {
-                "data": [1500000, 500000, 1000000]
+                "data": [342345, 198768, 128769]
             }
         ]
     }
@@ -46,7 +46,7 @@ def chart4(request):
         "labels": ["SMCP", "ACTI", "PARTYI"],
         "datasets": [
             {
-                "data": [500000, 700000, 900000]
+                "data": [128767, 342233, 665543]
             }
         ]
     }
@@ -58,7 +58,7 @@ def chart5(request):
          "labels": ["Product", "Party", "Account"],
         "datasets": [
             {
-                "data": [100000, 200000, 300000]
+                "data": [342345, 123231, 453421]
             }
         ]
     }
@@ -70,7 +70,7 @@ def chart6(request):
          "labels": ["Product", "Party", "Account"],
         "datasets": [
             {
-                "data": [450000, 600000, 750000]
+                "data": [124345, 342321, 453212]
             }
         ]
     }
@@ -82,7 +82,7 @@ def chart7(request):
        "labels": ["SMCP", "ACTI", "PARTYI"],
         "datasets": [
             {
-                "data": [450000, 600000, 750000]
+                "data": [223454, 432123, 542132]
             }
         ]
     }
@@ -94,7 +94,7 @@ def chart8(request):
         "labels": ["SMCP", "ACTI", "PARTYI"],
         "datasets": [
             {
-                "data": [450000, 600000, 750000]
+                "data": [453212, 543212, 124562]
             }
         ]
     }
