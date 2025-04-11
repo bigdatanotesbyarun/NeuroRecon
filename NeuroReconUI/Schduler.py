@@ -13,12 +13,16 @@ import requests
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, lit, when
 from datetime import datetime
+import os
+from pathlib import Path
 from django.conf import settings
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, FloatType
 
 # Max threads allowed
 MAX_THREADS = 5
 semaphore = Semaphore(MAX_THREADS)
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 def process_recon_request(reconvo_id):
     """
@@ -102,6 +106,7 @@ def fetch_json_from_api(url, payload):
 def recon(reconvo):
     # Load the Excel file and sheet
     excel_file = 'Staging\\DataModel\\ProductDataModel.xlsx'  # Path to your uploaded Excel file
+    excel_file = os.path.join(BASE_DIR, 'Staging', 'DataModel', 'ProductDataModel.xlsx')
     df = pd.read_excel(excel_file)
 
     # Extract the column names, mappings, and data types from the 'Destinationtype' column
@@ -110,7 +115,8 @@ def recon(reconvo):
     data_types = df['Destinationtype'].tolist()  # Get all DataTypes from the 'Destinationtype' column
 
     # Load the JSON file (Product.json)
-    json_file = 'Staging\\Incoming\\Product\\Product.json'  # Path to your uploaded JSON file
+    json_file = os.path.join(BASE_DIR, 'Staging', 'Incoming', 'Product','Product.json')
+   # json_file = 'Staging\\Incoming\\Product\\Product.json'  # Path to your uploaded JSON file
     with open(json_file, 'r') as f:
         json_data = json.load(f)
 
