@@ -9,6 +9,8 @@ from rest_framework.response import Response
 from langchain.document_loaders import PyPDFLoader
 from langchain.schema import Document
 import openpyxl 
+import os
+from pathlib import Path
 
 GENAI_API_KEY = "AIzaSyDLsN1tJQWw00Eh57Rnw_tLLH5VfN5DFkk"
 genai.configure(api_key=GENAI_API_KEY)
@@ -24,6 +26,36 @@ def read_excel_data(excel_path):
         excel_data.append(row)
         
     return excel_data
+
+def read_excel_data_from_dir(directory_path):
+    """
+    Reads data from all Excel files in a directory and combines them into a single list.
+    
+    :param directory_path: Path to the directory containing Excel files
+    :return: Combined list of data from all files
+    """
+    all_data = []
+    
+    # Check if the directory exists
+    if not os.path.exists(directory_path):
+        print(f"Directory {directory_path} does not exist.")
+        return []
+    
+    # Iterate over each file in the directory
+    for filename in os.listdir(directory_path):
+        file_path = os.path.join(directory_path, filename)
+        
+        # Process only .xlsx files
+        if filename.endswith(".xlsx") and os.path.isfile(file_path):
+            # Open the Excel file
+            wb = openpyxl.load_workbook(file_path)
+            sheet = wb.active
+            
+            # Read data starting from row 2 to skip the header row
+            for row in sheet.iter_rows(min_row=2, values_only=True):
+                all_data.append(row)  # Add each row to the all_data list
+    
+    return all_data
 
 def convert_excel_to_documents(excel_data):
     documents = []
@@ -50,7 +82,10 @@ def get_chat_dataEXCEL(request):
         return Response({"error": "Message is required"}, status=400)
 
     excel_path = "NeuroReconUI/1.xlsx"  # Provide the correct path to your Excel file
-    excel_data = read_excel_data(excel_path)
+    #excel_data = read_excel_data(excel_path)
+    BASE_DIR = Path(__file__).resolve().parent.parent
+    path = os.path.join(BASE_DIR, 'Staging', 'DataModel')
+    excel_data=read_excel_data_from_dir(path);
     documents = convert_excel_to_documents(excel_data)
     vector_store = create_vector_store(documents)  # Create the vector store inside the request handler
 
