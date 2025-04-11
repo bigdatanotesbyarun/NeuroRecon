@@ -260,23 +260,24 @@ def recon(reconvo):
     final_df = final_df.withColumn("env", lit("prod"))
 
     # # Step 8: Write the results to a PostgreSQL database
-    # DATABASE_NAME = settings.DATABASES['default']['NAME']  # 'NAME' is the database name
-    # DATABASE_USER = settings.DATABASES['default']['USER']  # 'USER' is the username
-    # DATABASE_PASSWORD = settings.DATABASES['default']['PASSWORD']  # 'PASSWORD' is the password
-    # DATABASE_HOST = settings.DATABASES['default']['HOST']  # 'HOST' is the host, e.g., 'localhost'
+    DATABASE_NAME = settings.DATABASES['default']['NAME']  # 'NAME' is the database name
+    DATABASE_USER = settings.DATABASES['default']['USER']  # 'USER' is the username
+    DATABASE_PASSWORD = settings.DATABASES['default']['PASSWORD']  # 'PASSWORD' is the password
+    DATABASE_HOST = settings.DATABASES['default']['HOST']  # 'HOST' is the host, e.g., 'localhost'
 
     # Define JDBC URL for PostgreSQL
     #jdbc_url = f"jdbc:postgresql://{DATABASE_HOST}:5432/{DATABASE_NAME}"
-    jdbc_url = "jdbc:postgresql://localhost:5432/telusko"
+    #jdbc_url = "jdbc:postgresql://localhost:5432/telusko"
     # Write the DataFrame to PostgreSQL
+    jdbc_url = f"jdbc:postgresql://{DATABASE_HOST}:5432/{DATABASE_NAME}"
+
     final_df.write \
         .format("jdbc") \
         .option("url", jdbc_url) \
         .option("dbtable", "neuroreconui_reconresult") \
-        .option("user", "postgres") \
-        .option("password", "1234") \
+        .option("user", DATABASE_USER) \
+        .option("password", DATABASE_PASSWORD) \
         .option("driver", "org.postgresql.Driver") \
         .mode("append") \
         .save()
     print('Data Written')
-
