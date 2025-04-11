@@ -150,6 +150,7 @@ STATIC_URL = 'static/'
 # If using a global static folder in the base directory
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'Staging'),
 ]
 
 # Default primary key field type
