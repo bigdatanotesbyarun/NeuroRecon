@@ -130,17 +130,13 @@
   
     <div class="header-content">
         <nav class="nav-links">
-
-              
-
-
             {% for headerPanel in headerPanelList %}
                     {% if  headerPanel.eventType == "Function" %}
                          <a href="javascript:void(0)" onclick={{headerPanel.idV}}>{{headerPanel.name}}</a>
                     {% elif  headerPanel.eventType == "L" %}
-                        <a href="{% url 'logout' %}" id={{headerPanel.idV}}>{{headerPanel.name}}</a>
+                        <!-- <a href="{% url 'logout' %}" id={{headerPanel.idV}}>{{headerPanel.name}}</a> -->
                     {% elif headerPanel.eventType == "NA" %}
-                        <!-- <a href="#" id={{headerPanel.idV}}>{{headerPanel.name}}</a>  -->
+                       <a href="#" id={{headerPanel.idV}}>{{headerPanel.name}}</a>  
                     {% endif %}
             {% endfor %}
 
@@ -157,7 +153,7 @@
                 </li>
               </ul>
 
-              <a href="#" id="logout">Logout</a> 
+              <a href="{% url 'logout' %}" id={{headerPanel.idV}}>{{headerPanel.name}}</a>
            
         </nav>
     </div>
