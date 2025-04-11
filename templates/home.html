@@ -131,7 +131,20 @@
     <div class="header-content">
         <nav class="nav-links">
 
-              <ul>
+              
+
+
+            {% for headerPanel in headerPanelList %}
+                    {% if  headerPanel.eventType == "Function" %}
+                         <a href="javascript:void(0)" onclick={{headerPanel.idV}}>{{headerPanel.name}}</a>
+                    {% elif  headerPanel.eventType == "L" %}
+                        <a href="{% url 'logout' %}" id={{headerPanel.idV}}>{{headerPanel.name}}</a>
+                    {% elif headerPanel.eventType == "NA" %}
+                        <!-- <a href="#" id={{headerPanel.idV}}>{{headerPanel.name}}</a>  -->
+                    {% endif %}
+            {% endfor %}
+
+            <ul>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle">Interfaces</a>
                   <ul class="dropdown-menu">
@@ -144,16 +157,7 @@
                 </li>
               </ul>
 
-
-            {% for headerPanel in headerPanelList %}
-                    {% if  headerPanel.eventType == "Function" %}
-                         <a href="javascript:void(0)" onclick={{headerPanel.idV}}>{{headerPanel.name}}</a>
-                    {% elif  headerPanel.eventType == "L" %}
-                        <a href="{% url 'logout' %}" id={{headerPanel.idV}}>{{headerPanel.name}}</a>
-                    {% elif headerPanel.eventType == "NA" %}
-                        <a href="#" id={{headerPanel.idV}}>{{headerPanel.name}}</a> 
-                    {% endif %}
-            {% endfor %}
+              <a href="#" id="logout">Logout</a> 
            
         </nav>
     </div>
