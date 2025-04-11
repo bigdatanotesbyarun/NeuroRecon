@@ -151,7 +151,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     os.path.join(BASE_DIR, 'Staging'),
-     os.path.join(BASE_DIR, 'Jar'),
+     os.path.join(BASE_DIR, 'Jars'),
 ]
 
 # Default primary key field type
