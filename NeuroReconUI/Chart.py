@@ -22,7 +22,7 @@ def chart2(request):
        "labels": ["Product", "Party", "Account"],
         "datasets": [
             {
-                "data": [456723, 587611, 129990]
+                "data": [657689, 590978, 846789]
             }
         ]
     }
@@ -34,7 +34,7 @@ def chart3(request):
         "labels": ["SMCP", "ACTI", "PARTYI"],
         "datasets": [
             {
-                "data": [242345, 198768, 128769]
+                "data": [657689, 590978, 846789]
             }
         ]
     }
@@ -46,7 +46,7 @@ def chart4(request):
         "labels": ["SMCP", "ACTI", "PARTYI"],
         "datasets": [
             {
-                "data": [128767, 342233, 665543]
+                "data": [657689, 590978, 846789]
             }
         ]
     }
@@ -58,7 +58,7 @@ def chart5(request):
          "labels": ["Product", "Party", "Account"],
         "datasets": [
             {
-                "data": [342345, 123231, 453421]
+                "data": [657689, 590978, 846789]
             }
         ]
     }
@@ -70,7 +70,7 @@ def chart6(request):
          "labels": ["Product", "Party", "Account"],
         "datasets": [
             {
-                "data": [124345, 342321, 453212]
+                "data":[657689, 590978, 846789]
             }
         ]
     }
@@ -82,7 +82,7 @@ def chart7(request):
        "labels": ["SMCP", "ACTI", "PARTYI"],
         "datasets": [
             {
-                "data": [223454, 432123, 542132]
+                "data": [657689, 590978, 846789]
             }
         ]
     }
@@ -94,7 +94,7 @@ def chart8(request):
         "labels": ["SMCP", "ACTI", "PARTYI"],
         "datasets": [
             {
-                "data": [453212, 543212, 124562]
+                "data": [657689, 590978, 846789]
             }
         ]
     }
