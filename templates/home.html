@@ -19,6 +19,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/chat.css' %}"> 
         <link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}"> 
         <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}"> 
+        <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}"> 
         <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}"> 
         <link rel="stylesheet" type="text/css" href="{% static 'css/tabledata.css' %}">  
         <link rel="stylesheet" type="text/css" href="{% static 'css/tabledata2.css' %}"> 
@@ -232,7 +233,7 @@
                
                 <button class="seg-btn selectedOption" data-value="EXCEL">EXCEL</button>
                 <button class="seg-btn" data-value="PDF">PDF</button>
-                <!-- <button id="close-chat" class="close-btn1">✖</button> -->
+                <button id="close-chat" class="close-btn1">✖</button> 
                 <button class="seg-btn" data-value="JSON">JSON</button>
                 <button class="seg-btn" data-value="SQL">SQL</button>
             </div>
@@ -871,6 +872,9 @@
                         </div>
                     </div>
                 </form>
+                <div id="loadingSpinner" style="display:none;">
+                    <div class="spinner"></div>
+                </div>
             </div>
 
 
