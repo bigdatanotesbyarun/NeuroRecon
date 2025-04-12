@@ -72,7 +72,7 @@
         
         /* Main content */
         .main-content {
-            margin-left: 180px; /* Ensure content is aligned next to the sidebar */
+            margin-left: 250px; /* Ensure content is aligned next to the sidebar */
             padding: 20px;
             width: calc(100% - 250px); /* Ensure content fills the remaining space next to the sidebar */
             display: flex;
