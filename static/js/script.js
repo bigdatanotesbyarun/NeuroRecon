@@ -962,8 +962,9 @@ function hideElements(classNames) {
 
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("showChart")?.addEventListener("click", function() {
-        document.getElementById("chartContainer").style.display = "block";  // Show the chart container
-
+        // Show the chart container
+        hideElements("hide") 
+        document.getElementById("chartContainer").style.display = "block"; 
         // Fetch data for each chart
         const chartUrls = [
             // 'http://localhost:8000/chart1/',  // Chart 1 endpoint

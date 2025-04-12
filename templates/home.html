@@ -58,6 +58,12 @@
     window.onload = function() {
        hideElements("hide") // Ensure textarea is editable
    };
+
+
+//   function toggleUpload(show) {
+//     const uploadDiv = document.getElementById("uploadDiv");
+//     uploadDiv.style.display = show ? "block" : "none";
+// }
  </script>
 
  <style>
@@ -126,7 +132,8 @@
 
 <header class="main-header">
     <span class="menu-icon" id="menuToggle">&#9776;</span>
-    <div  class="header-content" style="font-weight: 100;">RefRecon</div>
+    <!-- <div  class="header-content" style="font-weight: 100;">RefRecon</div> -->
+    <div class="user-welcome-left" style="float: left; margin-left: 20px;">RefRecon</div>
   
     <div class="header-content">
         <nav class="nav-links">
@@ -160,7 +167,7 @@
 
     <div class="user-welcome-left" style="float: left; margin-left: 20px;">
         {% if user.is_authenticated %}
-            <span> {{ user.username }}</span>
+            <span>{{ user.username }}</span>
         {% else %}
             <span>Welcome, Guest!</span>
         {% endif %}
@@ -220,12 +227,12 @@
             
         <div id="chat-container" class="chat-container hide">
             <div class="chat-header">
-                <span>ChatBoat</span>
+                <span>ReferenceData-ChatBoat</span>
         
                
                 <button class="seg-btn selectedOption" data-value="EXCEL">EXCEL</button>
                 <button class="seg-btn" data-value="PDF">PDF</button>
-                <button id="close-chat" class="close-btn1">✖</button>
+                <!-- <button id="close-chat" class="close-btn1">✖</button> -->
                 <button class="seg-btn" data-value="JSON">JSON</button>
                 <button class="seg-btn" data-value="SQL">SQL</button>
             </div>
@@ -860,6 +867,76 @@
 
                         <div class="button-row">
                             <button type="button" id="bt8">Upload</button>
+                            <button type="reset">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <div id="form9" class="form-container hide" style="display: none;">
+                <span style="color: #000000;  font-family: 'Arial', sans-serif; font-weight:bold">SCD2FileGeneration</span>
+                <form id="formId8">
+                    <div class="form-fields">
+                        
+                        
+                        <div class="field-container">
+                            <label for="tblNameLbl">Env</label>
+                            <select id="env" name="tblName">
+                                <option value="A">PROD</option>
+                                <option value="B">COB</option>
+                            </select>
+                        </div>
+
+                        <div class="field-container">
+                            <label for="tblNameLbl">Entity</label>
+                            <select id="entity" name="tblName">
+                                <option value="Product">Product</option>
+                                <option value="Party">Party</option>
+                                <option value="Account">Account</option>
+                            </select>
+                        </div>
+
+                        <div class="field-container">
+                            <label for="tblNameLbl">FileType</label>
+                            <select id="fileType" name="fileType">
+                                <option value="JSON">JSON</option>
+                                <option value="CSV">CSV</option>
+                                <option value="EXCEL">EXCEL</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="tblNameLbl">Keys</label>
+                            <input type="text" name="keys" id="keys" size="43" required>
+                        </div>
+                       
+                        <div class="field-container">
+                        <label for="tblNameLbl">
+                            <input type="radio" name="option" value="option1">
+                         File
+                          </label><br>
+                        </div>
+                        
+                        <div class="field-container">
+                        <label>
+                            <input type="radio" name="option" value="option1">
+                         Text
+                          </label><br>
+                        </div>
+
+                        <div>
+                            <span style="color: #000000; font-family: 'Arial', sans-serif; font-weight:bold">File:</span>
+                             <input type="file" name="file" id="id_file" required>
+                        </div>
+
+                        <div>
+                            <label for="tblNameLbl">OutPut File Path:</label>
+                            <input type="text" name="keys" id="keys" size="43" required>
+                        </div>
+                        
+                        <div class="button-row">
+                            <button type="button" id="bt9">Submit</button>
                             <button type="reset">Reset</button>
                         </div>
                     </div>
