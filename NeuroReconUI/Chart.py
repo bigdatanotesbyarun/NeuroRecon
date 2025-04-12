@@ -22,7 +22,7 @@ def chart2(request):
        "labels": ["Product", "Party", "Account"],
         "datasets": [
             {
-                "data": [456723, 987611, 129990]
+                "data": [456723, 587611, 129990]
             }
         ]
     }
@@ -34,7 +34,7 @@ def chart3(request):
         "labels": ["SMCP", "ACTI", "PARTYI"],
         "datasets": [
             {
-                "data": [342345, 198768, 128769]
+                "data": [242345, 198768, 128769]
             }
         ]
     }

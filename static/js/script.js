@@ -962,36 +962,23 @@ function hideElements(classNames) {
 
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("showChart")?.addEventListener("click", function() {
-        // Show the chart container
         hideElements("hide") 
         document.getElementById("chartContainer").style.display = "block"; 
-        // Fetch data for each chart
         const chartUrls = [
-            // 'http://localhost:8000/chart1/',  // Chart 1 endpoint
-            // 'http://localhost:8000/chart2/',
-            // 'http://localhost:8000/chart3/',  // Chart 1 endpoint
-            // 'http://localhost:8000/chart4/',
-            // 'http://localhost:8000/chart5/',  // Chart 1 endpoint
-            // 'http://localhost:8000/chart6/',
-            // 'http://localhost:8000/chart7/',  // Chart 1 endpoint
-            // 'http://localhost:8000/chart8/',
-
-            '/chart1/',  // Chart 1 endpoint
+         
+            '/chart1/', 
             '/chart2/',
-            '/chart3/',  // Chart 1 endpoint
+            '/chart3/',  
             '/chart4/',
-            '/chart5/',  // Chart 1 endpoint
+            '/chart5/',  
             '/chart6/',
-            '/chart7/',  // Chart 1 endpoint
+            '/chart7/',  
             '/chart8/',
         ];
 
-        // Fetch data for each chart
         Promise.all(chartUrls.map(url => fetch(url).then(response => response.json())))
             .then(dataArray => {
-                // Loop through each chart and render
                 dataArray.forEach((data, index) => {
-                    // Call renderChart function for each chart
                     renderChart(`chart${index + 1}`, data);
                 });
             })
@@ -1002,27 +989,27 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function renderChart(chartId, chartData) {
+    const filteredData = chartData.datasets[0].data.filter(value => value !== undefined && value !== null);
+    const filteredLabels = chartData.labels.filter((label, index) => chartData.datasets[0].data[index] !== undefined && chartData.datasets[0].data[index] !== null);
+
     let options = {
         responsive: true,
         maintainAspectRatio: false,
         layout: {
-            padding: {
-                top: 20,
-                left: 10,
-                right: 10,
-                bottom: 10
-            }
-        },
+                        padding: {
+                            top: 20,
+                            left: 10,
+                            right: 10,
+                            bottom: 10
+                        }
+                },
         plugins: {
             datalabels: {
                 anchor: 'end',
                 align: 'top',
                 font: {
                     weight: 'bold',
-                    size: 14
-                },
-                legend: {
-                    display: false  // Disable the legend (the tab color)
+                    size: 12
                 },
                 color: 'black',
                 formatter: function(value) {
@@ -1052,20 +1039,18 @@ function renderChart(chartId, chartData) {
                 ticks: {
                     display: true  // Optionally keep ticks if you need them
                 }
-            }
+            },
+            
         }
     };
     
-    Chart.register(ChartDataLabels);
-    // Create the chart using the passed data and chartId
+   Chart.register(ChartDataLabels)
     new Chart(document.getElementById(chartId), {
-        type: "bar",  // Type of chart (bar)
-        chartData : chartData.datasets[0].data.map(value => (value === undefined || value === null) ? 0 : value),
-        labels : chartData.labels.map(label => label || 'No Label'),
+        type: "bar", 
         data: {
-            labels: chartData.labels,  // Use the labels from the API
+            labels: filteredLabels,  // Use the labels from the API
             datasets: [{
-                data: chartData.datasets[0].data,  // Use the data from the API
+                data:filteredData,  // Use the data from the API
                 backgroundColor: ["#ee227d", "#498099", "#30c0b7"],
                 borderColor: "#fff",
                 borderWidth: 1
