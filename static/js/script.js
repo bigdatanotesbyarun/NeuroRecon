@@ -668,6 +668,10 @@ $(document).ready(function () {
 
 
 
+
+
+
+
 $(document).ready(function () {
     $("#loadjobs").click(function (event) {
         event.preventDefault();
@@ -1205,3 +1209,195 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     
     
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const uploadBtn = document.getElementById("bt9");
+        const form = document.getElementById("formId9");
+    
+        // Function to get the CSRF token from the cookie
+        function getCookie(name) {
+            const cookieValue = document.cookie
+                .split('; ')
+                .find(row => row.startsWith(name + '='))
+                ?.split('=')[1];
+            return cookieValue ? decodeURIComponent(cookieValue) : null;
+        }
+    
+        uploadBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+    
+            const formData = new FormData();
+    
+            const env = document.getElementById("env9").value;
+            const entity = document.getElementById("entity9").value;
+            const filePath = document.getElementById("filePath9").value;
+            const fileType = document.getElementById("fileType9").value;
+            const fileInput = document.getElementById("id_file9");
+            const file = fileInput.files[0];
+            const fileName1 = file.name;
+    
+            // env9
+            // entity9
+            // filePath9
+            // fileType9
+            // id_file9
+
+            if (!file) {
+                alert("Please select a file before uploading.");
+                return;
+            }
+    
+            // Append form data
+            formData.append("env", env);
+            formData.append("entity", entity);
+            formData.append("filePath", filePath);
+            formData.append("fileType", fileType);
+            formData.append("file", file);
+    
+            const csrftoken = getCookie('csrftoken'); // Get CSRF token from cookies
+    
+            if (!csrftoken) {
+                alert("CSRF token not found!");
+                return;
+            }
+    
+            // Show the loading spinner (you can add this part if you have a spinner element)
+            const loadingSpinner = document.getElementById("loadingSpinner9");
+            loadingSpinner.style.display = 'flex';  // Assuming you have a spinner element in your HTML
+    
+            fetch("/upload-file/", {
+                method: "POST",
+                headers: {
+                    'X-CSRFToken': csrftoken, // CSRF token in headers
+                },
+                body: formData,
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    // Hide the loading spinner after response
+                    
+                    if (data.success) {
+                        alert("File uploaded successfully.");
+                        formData.delete("id_file9")
+                        var requestId = "Req" + new Date().toISOString().slice(0, 10).replace(/-/g, "") + Date.now().toString().slice(-4);
+                        formData.set('filePath', formData.get('filePath')+fileName1);
+                        formData.append("reqId", requestId);
+                        formData.append("name", "Admin");
+                        formData.append("date",  "2025-04-02");
+                        formData.append("created", "2025-04-02" );
+                        const jsonData = Object.fromEntries(formData.entries());
+                        console.log(jsonData);
+                        const jsonData1=JSON.stringify(jsonData);
+                        console.log(JSON.stringify(jsonData));
+                        const saveUserDataUrl = '/save_scd_data/';
+                        const csrftoken = getCookie('csrftoken');
+                        fetch(saveUserDataUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': csrftoken
+                            },
+                            body: jsonData1
+                        })
+                        .then((response) => response.json())
+                        .then((data) => console.log(data))
+                        .catch(error => console.error(error));
+                        loadingSpinner.style.display = 'none';
+                        form.reset();
+                    } else {
+                        alert("Upload failed: " + data.message);
+                    }
+                })
+                .catch((error) => {
+                    // Hide the loading spinner if there's an error
+                    loadingSpinner.style.display = 'none';
+    
+                    console.error("Upload error:", error);
+                    alert("Error uploading file.");
+                });
+        });
+    });
+    
+    
+    $(document).ready(function () {
+        $("#loadscdrecon").click(function (event) {
+            event.preventDefault();
+            hideElements("hide");
+            // Hide other sections
+           //  $("#chat-container,#form1,#form2,#form3,#form4,#form5,#jobsrecon, #chartContainer, #requestTable1, #requestTable, #receipt, #form1,#skrecon,#requestTable2",).hide();
+            $("#scdrecon").show(); // Show the table
+            
+            $.ajax({
+                url: "/get_scd_data/",
+                type: "GET",
+                success: function (response) {
+                    let tableBody = $("#scdDatarecon tbody");
+                    tableBody.empty();
+                    
+                    response.forEach(SCDVO => {
+                        let statusColor = (SCDVO.status === "InProgress") ? 'red' : 'green';
+                        let row = `<tr>
+                            <td>${SCDVO.reqId}</td>
+                            <td>${SCDVO.name}</td>
+                            <td>${SCDVO.created}</td>
+                            <td><a href="#" onclick="downLoadFile('${SCDVO.filePath}')">Download :${SCDVO.filePath}</a></td>
+                            <td><a href="#" onclick="downLoadFile('${SCDVO.outputFile}')">Download :${SCDVO.outputFile}</a></td>
+                            <td style="color: ${statusColor}; font-weight: bold;">${SCDVO.status}</td>
+                            </tr>`;
+                        tableBody.append(row);
+                    });
+                    if ($.fn.DataTable.isDataTable("#scdDatarecon")) {
+                        $("#scdDatarecon").DataTable().destroy();
+                    }
+    
+                    // <td>${SCDVO.reqId}</td>
+                    // <td>${SCDVO.name}</td>
+                    // <td>${SCDVO.created}</td>
+                    // <td>${SCDVO.env}</td>
+                    // <td>${SCDVO.entity}</td>
+                    // <td>${SCDVO.filePath}</td>
+                    //  <td>${SCDVO.fileType}</td>
+                    // <td>${SCDVO.outputFile}</td>
+                    // <td style="color: ${statusColor}; font-weight: bold;">${SCDVO.status}</td>
+
+
+
+
+                    // Initialize DataTable with sorting, filtering, pagination & export
+                    $("#scdDatarecon").DataTable({
+                        dom: 'Bfrtip',
+                        buttons: [
+                            { extend: 'excelHtml5', text: 'ExportExcel', className: 'btn-export btn-excel' }
+                        ],
+                        paging: true,      // Enable pagination
+                        searching: true,   // Enable search filter
+                        ordering: true,    // Enable sorting
+                        responsive: true,  // Enable responsive design
+                    });
+                },
+                error: function () {
+                    alert("Error fetching data!");
+                }
+            });
+        });
+    });
+
+// document.addEventListener("DOMContentLoaded", function () {
+//     document.getElementById('batch').addEventListener('change', function () {
+//         var offsetFields = document.getElementById('offsetFields');
+//         if (this.value === 'RT') {
+//             offsetFields.style.display = 'block';
+//         } else {
+//             offsetFields.style.display = 'none';
+//         }
+//     });
+// });
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById('batch').addEventListener('change', function () {
+        var offsetFields = document.getElementsByClassName('offset-fields');
+        for (var i = 0; i < offsetFields.length; i++) {
+            offsetFields[i].style.display = (this.value === 'RT') ? 'block' : 'none';
+        }
+    });
+});

@@ -44,7 +44,7 @@ def audit(request):
     print(json1_data);
 
 
-    spark = SparkSession.builder.appName('JsonComparison').master('local[*]').config("spark.jars", "NeuroReconUI\\Jar\\postgresql-42.7.5.jar").enableHiveSupport().getOrCreate()
+    spark = SparkSession.builder.appName('JsonComparison').master('local[*]').config("spark.jars", "Jars\\postgresql-42.7.5.jar").enableHiveSupport().getOrCreate()
 
     spark.sparkContext.setLogLevel("ERROR")
 

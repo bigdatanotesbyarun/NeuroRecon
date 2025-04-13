@@ -116,4 +116,21 @@ class ReconResult(models.Model):
     class Meta:
         db_table = 'neuroreconui_reconresult' 
   
+class SCDVO(models.Model):
+    reqId=models.CharField(max_length=1000, blank=True)
+    name=models.CharField(max_length=1000 ,blank=True) 
+    created=models.DateTimeField(auto_now_add=True)
+    env=models.CharField(max_length=1000, blank=True)
+    entity=models.CharField(max_length=1000, blank=True)
+    filePath=models.CharField(max_length=1000 ,blank=True)
+    fileType=models.CharField(max_length=1000 ,blank=True)
+    outputFile=models.CharField(max_length=1000 ,null=True,blank=True)
+    status=models.CharField(max_length=1000 ,blank=True ,default="InProgress")
+
    
+    
+
+    
+
+
+  

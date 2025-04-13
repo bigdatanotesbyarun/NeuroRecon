@@ -24,6 +24,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/tabledata.css' %}">  
         <link rel="stylesheet" type="text/css" href="{% static 'css/tabledata2.css' %}"> 
         <link rel="stylesheet" type="text/css" href="{% static 'css/skrecon.css' %}"> 
+        <link rel="stylesheet" type="text/css" href="{% static 'css/scdrecon.css' %}"> 
         <link rel="stylesheet" type="text/css" href="{% static 'css/countrecon.css' %}"> 
         <link rel="stylesheet" type="text/css" href="{% static 'css/gz.css' %}"> 
         <link rel="stylesheet" type="text/css" href="{% static 'css/jobs.css' %}"> 
@@ -59,6 +60,16 @@
     window.onload = function() {
        hideElements("hide") // Ensure textarea is editable
    };
+
+
+   document.getElementById('batch').addEventListener('change', function () {
+        var offsetFields = document.getElementById('offsetFields');
+        if (this.value === 'RT') {
+            offsetFields.style.display = 'block';
+        } else {
+            offsetFields.style.display = 'none';
+        }
+    });
 
 
 //   function toggleUpload(show) {
@@ -168,7 +179,7 @@
 
     <div class="user-welcome-left" style="float: left; margin-left: 20px;">
         {% if user.is_authenticated %}
-        <span style="color: orange">{{ user.username|capfirst }}</span>
+        <span style="color: hsl(39, 100%, 50%)">{{ user.username|capfirst }}</span>
         {% else %}
             <span>Welcome, Guest!</span>
         {% endif %}
@@ -253,118 +264,118 @@
                 <span style="color: #000000;  font-family: 'Arial', sans-serif; font-weight:bold">ReconDetails</span>
                 <form id="formId1">
                     <div class="form-fields">
-                        <div class="field-container">
-                            <label for="tblNameLbl">Entity</label>
-                            <select id="tblName" name="tblName">
-                                {% for tbl in tablelList %}
-                                    <option value={{ tbl.lebal }}>{{ tbl.lebal }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        
-                        <div class="field-container">
-                            <label for="pipelineLbl">Pipeline</label>
-                            <select id="pipeline" name="pipeline">
-                                {% for line in pipeLineList %}
-                                    <option value="{{ line.name }}">{{ line.lebal }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-fields">
-                        <div class="field-container">
-                            <label for="temporalLbl">Temporal</label>
-                            <select id="temporal" name="temporal">
-                                <option value="TYPE1" selected>TYPE1</option>
-                                <option value="TYPE2-SCD2">TYPE2-SCD2</option>
-                            </select>
-                        </div>
-                        
-                        <div class="field-container">
-                            <label for="onBoardingLbl">OnBoarding</label>
-                            <select id="onBoarding" name="onBoarding">
-                                <option value="DC" selected>DC</option>
-                                <option value="NRT">NRT</option>
-                                <option value="SF">SF</option>
-                            </select>
-                        </div>
-                    </div>
+                                    <div class="field-container">
+                                        <label for="field2">Env</label>
+                                        <select id="field2" name="field2">
+                                            <option value="PROD" selected>PROD</option>
+                                            <option value="COB" >COB</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="field-container">
+                                        <label for="tblNameLbl">Entity</label>
+                                        <select id="tblName" name="tblName">
+                                            {% for tbl in tablelList %}
+                                                {% if tbl.lebal == "Product" %}
+                                                <option value={{ tbl.lebal }} selected>{{ tbl.lebal }}</option>
+                                                {% else %}
+                                                <option value={{ tbl.lebal }}>{{ tbl.lebal }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="field-container">
+                                        <label for="pipelineLbl">Pipeline</label>
+                                        <select id="pipeline" name="pipeline">
+                                            {% for line in pipeLineList %}
+                                                {% if line.name == "CLOUD-GEMFIRE" %}
+                                                <option value="{{ line.name }}" selected>{{ line.lebal }}</option>
+                                                {% else %}
+                                                <option value="{{ line.name }}">{{ line.lebal }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="field-container">
+                                        <label for="batchLbl">Batch</label>
+                                        <select id="batch" name="batch">
+                                            <option value="EOD" selected>EOD</option>
+                                            <option value="RT">RT</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="field-container">
+                                        <label for="temporalLbl">Temporal</label>
+                                        <select id="temporal" name="temporal">
+                                            <option value="TYPE1" selected>TYPE1</option>
+                                            <option value="TYPE2">TYPE2-SCD2</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="field-container">
+                                        <label for="onBoardingLbl">OnBoarding</label>
+                                        <select id="onBoarding" name="onBoarding">
+                                            <option value="DC" selected>DC</option>
+                                            <option value="NRT">NRT</option>
+                                            <option value="SF">SF</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="field-container">
+                                        <label for="field3">Recon</label>
+                                        <select id="field3" name="field3">
+                                            <option value="SingleRecon" selected>SINGLE RECON</option>
+                                            <option value="BulkRecon">BULK RECON</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="field-container">
+                                        <label for="field4">FilePattern</label>
+                                        <select id="field4" name="field4">
+                                            <option value="JSON" selected>JSON</option>
+                                            <option value="CSV">CSV</option>
+                                            <option value="EXCEL">EXCEL</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="field-container">
+                                        <label for="dateLbl">Business Date</label>
+                                        <input type="text" id="date" name="date"  value="2025-01-31">
+                                    </div>
+
+                                    <div class="field-container">
+                                        <label for="field1">FilePath</label>
+                                        <input type="text" id="field1" name="date" value="/home/">
+                                    </div>
+
+                                    <div class="field-container">
+                                        <label for="field5">DataModel</label>
+                                        <input type="text" id="field5" name="date" value="ProductDataModel.xlsx">
+                                    </div>
             
-                    <div class="form-fields">
-                        <div class="field-container">
-                            <label for="batchLbl">Batch</label>
-                            <select id="batch" name="batch">
-                                <option value="EOD" selected>EOD</option>
-                                <option value="RT">RT</option>
-                            </select>
-                        </div>
-                        
-                        <div class="field-container">
-                            <label for="dateLbl">Business Date</label>
-                            <input type="text" id="date" name="date" placeholder="2025-01-31">
-                        </div>
-                    </div>
+                                    <div class="field-container">
+                                        <label for="field6">FileSuffix</label>
+                                        <input type="text" id="field6" name="date" value="*.Product.json">
+                                    </div>
 
-                    <div class="form-fields">
-                        
-                        
-                        <div class="field-container">
-                            <label for="field1">FilePath</label>
-                            <input type="text" id="field1" name="date" value="/home/">
-                        </div>
-                        <div class="field-container">
-                            <label for="field2">Env</label>
-                            <select id="field2" name="field2">
-                                <option value="PROD" selected>PROD</option>
-                                <option value="COB" selected>COB</option>
-                                <option value="UAT" selected>UAT</option>
-                            </select>
-                        </div>
-                        
-                        <div class="field-container">
-                            <label for="field3">Recon</label>
-                            <select id="field3" name="field3">
-                                <option value="SingleRecon" selected>SingleRecon</option>
-                                <option value="BulkRecon">BulkRecon</option>
-                            </select>
-                        </div>
-                        <div class="field-container">
-                            <label for="field4">FilePattern</label>
-                            <select id="field4" name="field4">
-                                <option value="JSON" selected>JSON</option>
-                                <option value="CSV">CSV</option>
-                                <option value="EXCEL">EXCEL</option>
-                            </select>
-                        </div>
-                        
-                        <div class="field-container">
-                            <label for="field5">DataModel</label>
-                            <input type="text" id="field5" name="date" value="ProductDataModel.xlsx">
-                        </div>
+                                    <div class="offset-fields">
+                                        <label for="startOffSet">Start Offset</label>
+                                        <input type="text" id="startOffSet" name="startOffSet" value="1:1000",placeholder="1:1000,2:1000,3:1000">
+                                    </div>
+                                    
+                                    <div class="offset-fields">
+                                        <label for="endOffSet">End Offset</label>
+                                        <input type="text" id="endOffSet" name="endOffSet" value="1:1000",placeholder="1:5000,2:5000,3:5000">
+                                    </div>
 
-                        <div class="field-container">
-                            <label for="field6">FileSuffix</label>
-                            <input type="text" id="field6" name="date" value="*.Product.json">
-                        </div>
-                        
-                    </div>
-
-                    <div class="form-fields">
-                        <div class="field-container">
-                            <label for="startOffSet">Start Offset</label>
-                            <input type="text" id="startOffSet" name="startOffSet" value="1:1000,2:1000,3:1000",placeholder="1:1000,2:1000,3:1000">
-                        </div>
-                        
-                        <div class="field-container">
-                            <label for="endOffSet">End Offset</label>
-                            <input type="text" id="endOffSet" name="endOffSet" value="1:1000,2:1000,3:1000",placeholder="1:5000,2:5000,3:5000">
-                        </div>
-                    </div>
-            
-                    <div class="button-row">
-                        <button type="button" id="bt1">Submit</button>
-                        <button type="reset">Reset</button>
+                                    <div class="button-row">
+                                        <button type="button" id="bt1">Submit</button>
+                                        <button type="reset">Reset</button>
+                                    </div>
+                                   
                     </div>
                 </form>
             </div>
@@ -818,6 +829,30 @@
             </div>
 
 
+            <div id="scdrecon" style="display: none;" class="hide">
+                <p style="font-size: 16px; font-weight: bold; text-align: center;color: #2c3e50; margin-bottom: 20px;">SCD2DataFileAudit</p>
+                <div class="table-container">
+                            <table id="scdDatarecon" class="display">
+                                        <thead>
+                                            <tr>
+                                                <th>ReqId</th>
+                                                <th>Name</th>
+                                                <th>CreatedDate</th>
+                                                <!-- <th>Env</th>
+                                                <th>Entity</th> -->
+                                                <th>InputFilePath</th>
+                                                <!-- <th>FileType</th> -->
+                                                <th>OutputFilePath</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                            </table>
+                </div>
+            </div>
+
+
 
             <div id="form8" class="form-container hide" style="display: none;">
                 <span style="color: #000000;  font-family: 'Arial', sans-serif; font-weight:bold">FileUpload</span>
@@ -878,13 +913,13 @@
 
             <div id="form9" class="form-container hide" style="display: none;">
                 <span style="color: #000000;  font-family: 'Arial', sans-serif; font-weight:bold">SCD2FileGeneration</span>
-                <form id="formId8">
+                <form id="formId9">
                     <div class="form-fields">
                         
                         
                         <div class="field-container">
                             <label for="tblNameLbl">Env</label>
-                            <select id="env" name="tblName">
+                            <select id="env9" name="tblName">
                                 <option value="A">PROD</option>
                                 <option value="B">COB</option>
                             </select>
@@ -892,28 +927,34 @@
 
                         <div class="field-container">
                             <label for="tblNameLbl">Entity</label>
-                            <select id="entity" name="tblName">
+                            <select id="entity9" name="tblName">
                                 <option value="Product">Product</option>
                                 <option value="Party">Party</option>
                                 <option value="Account">Account</option>
                             </select>
                         </div>
 
+                        <div>
+                            <label for="FilePath">FilePath</label>
+                            <input type="text" id="filePath9" name="filePath" size="43"> 
+                        </div>
+
                         <div class="field-container">
                             <label for="tblNameLbl">FileType</label>
-                            <select id="fileType" name="fileType">
+                            <select id="fileType9" name="fileType">
                                 <option value="JSON">JSON</option>
                                 <option value="CSV">CSV</option>
                                 <option value="EXCEL">EXCEL</option>
                             </select>
                         </div>
 
-                        <div>
+                        
+                        <!-- <div>
                             <label for="tblNameLbl">Keys</label>
                             <input type="text" name="keys" id="keys" size="43" required>
-                        </div>
+                        </div> -->
                        
-                        <div class="field-container">
+                        <!-- <div class="field-container">
                         <label for="tblNameLbl">
                             <input type="radio" name="option" value="option1">
                          File
@@ -925,17 +966,19 @@
                             <input type="radio" name="option" value="option1">
                          Text
                           </label><br>
-                        </div>
+                        </div> -->
 
                         <div>
                             <span style="color: #000000; font-family: 'Arial', sans-serif; font-weight:bold">File:</span>
-                             <input type="file" name="file" id="id_file" required>
+                             <input type="file" name="id_file9" id="id_file9" required>
                         </div>
 
-                        <div>
+                        
+
+                        <!-- <div>
                             <label for="tblNameLbl">OutPut File Path:</label>
                             <input type="text" name="keys" id="keys" size="43" required>
-                        </div>
+                        </div> -->
                         
                         <div class="button-row">
                             <button type="button" id="bt9">Submit</button>
@@ -943,7 +986,7 @@
                         </div>
                     </div>
                 </form>
-                <div id="loadingSpinner" style="display:none;">
+                <div id="loadingSpinner9" style="display:none;">
                     <div class="spinner"></div>
                 </div>
             </div>

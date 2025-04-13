@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<configuration>
+
+    <!-- JDBC connection string for the embedded metastore (using Derby) -->
+    <property>
+        <name>javax.jdo.option.ConnectionURL</name>
+        <value>jdbc:derby:;databaseName=metastore_db;create=true</value>
+        <description>JDBC connect string for an embedded metastore (Derby DB)</description>
+    </property>
+
+    <!-- Tell Hive that it's using an embedded metastore -->
+    <property>
+        <name>hive.metastore.local</name>
+        <value>true</value>
+        <description>Set to true to use the embedded metastore</description>
+    </property>
+
+    <!-- Auto-create the tables in the metastore -->
+    <property>
+        <name>datanucleus.autoCreateTables</name>
+        <value>true</value>
+    </property>
+
+    <!-- Location of the warehouse directory (adjust path as needed) -->
+    <property>
+        <name>hive.metastore.warehouse.dir</name>
+        <value>/user/hive/warehouse</value>
+        <description>Path where Hive tables are stored</description>
+    </property>
+
+</configuration>

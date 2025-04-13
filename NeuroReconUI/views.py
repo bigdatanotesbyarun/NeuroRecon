@@ -3,8 +3,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import ChartPanelCOB,ReconVO,ReconResult,RequestVO,GZTable, Jobs,Sidebar,HeaderPanel,ChartPanel,Table, PipeLine ,GemfireCountTable1,SKReconTable
-from .serializers import ItemSerializer,GemfireItemSerializer,ReconResultItemSerializer,SKReconItemSerializer,GreenZoneItemSerializer,JobsItemSerializer
+from .models import SCDVO,ChartPanelCOB,ReconVO,ReconResult,RequestVO,GZTable, Jobs,Sidebar,HeaderPanel,ChartPanel,Table, PipeLine ,GemfireCountTable1,SKReconTable
+from .serializers import SCDSerializer, ItemSerializer,GemfireItemSerializer,ReconResultItemSerializer,SKReconItemSerializer,GreenZoneItemSerializer,JobsItemSerializer
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -19,12 +19,22 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.http import FileResponse, Http404
+from django.utils.http import urlsafe_base64_decode
+import os
 
 
 def logout_view(request):
     logout(request)  # This logs the user out
     return redirect('login')  # Redirect to the homepage after logging out
 
+
+
+
+from django.shortcuts import render
+from django.http import HttpResponse, FileResponse
+from django.conf import settings
+import os
 
 
 def login_view(request):
@@ -89,12 +99,28 @@ def save_recon_data(request):
              return Response(serilizer.data)
        else:
              raise ValidationError(serilizer.errors)
+       
+@api_view(['POST'])    
+def save_scd_data(request):
+       serilizer=SCDSerializer(data=request.data)
+       if serilizer.is_valid():
+             serilizer.save()
+             return Response(serilizer.data)
+       else:
+             raise ValidationError(serilizer.errors)
              
 
 @api_view(['GET'])
 def get_recon_data(request):
         recon=ReconVO.objects.all()
         serializer=ItemSerializer(recon,many=True)
+        return Response(serializer.data);
+
+
+@api_view(['GET'])
+def get_scd_data(request):
+        recon=SCDVO.objects.all()
+        serializer=SCDSerializer(recon,many=True)
         return Response(serializer.data);
 
 
