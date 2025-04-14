@@ -39,7 +39,7 @@ def process_recon_request(reconvo_id):
         # Fetch the request based on ReconVO ID
         reconvo = SCDVO.objects.get(id=reconvo_id)
 
-        if reconvo.status == 'InProgress':
+        if reconvo.status != 'Finished':
             # Update status to 'Running' before processing
             reconvo.status = 'Running'
             reconvo.save()
@@ -47,7 +47,7 @@ def process_recon_request(reconvo_id):
             # Simulating some processing logic
             print(f"Processing request {reconvo.reqId}...")
             excel_file = os.path.join(BASE_DIR, 'Staging', 'DataModel', 'ProductDataModel.xlsx')
-            path=update_json_by_excel(reconvo.filePath,excel_file)
+            path=update_json_by_excel(reconvo.filePath,excel_file,reconvo.reqId)
             
             # After processing, update status to 'Finished'
             reconvo.outputFile=path
@@ -92,7 +92,30 @@ def start_scdmonitoring():
 # Start the monitoring when the application starts
 start_scdmonitoring()
 
-def update_json_by_excel(json_path, excel_path, output_path=None):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def update_json_by_excel(json_path, excel_path, reqId,output_path=None):
     # Safety check for file existence
     if not os.path.exists(json_path):
         raise FileNotFoundError(f"JSON file not found: {json_path}")
@@ -118,6 +141,30 @@ def update_json_by_excel(json_path, excel_path, output_path=None):
     # Load JSON
     with open(json_path, 'r') as f:
         data = json.load(f)
+
+        print("🔍 Extracting NaturalKey mappings...")
+        mappings = get_natural_key_mappings(excel_path)
+        order_ids = extract_order_ids_from_json_dynamic(json_path, mappings)
+
+        jarf = os.path.join(BASE_DIR, 'Jars', 'postgresql-42.7.5.jar')
+    
+        print("🚀 Starting Spark session for filtering...")
+        spark = SparkSession.builder \
+            .master('local[*]') \
+            .config("spark.jars",jarf)\
+            .appName("Recon OrderId Filter") \
+            .getOrCreate()
+            #.enableHiveSupport() \
+          
+        
+        
+
+
+        filter_order_actv_table(spark, order_ids, reqId)
+
+        spark.stop()
+       # print(f"⚠️ Error during Spark filtering: {e}")
+
 
     # Define transformation logic based on data type
     def update_value(val):
@@ -157,4 +204,63 @@ def update_json_by_excel(json_path, excel_path, output_path=None):
         json.dump(data, f, indent=4)
 
     return os.path.abspath(output_path)
+    
+
+
+
+
+
+def get_natural_key_mappings(excel_path):
+    df = pd.read_excel(excel_path)
+    df['NaturalKey'] = df['NaturalKey'].astype(str).str.strip().str.upper()
+    df = df[(df['NaturalKey'] == 'Y')]
+    return df['Mapping'].dropna().astype(str).str.strip().tolist()
+
+def get_nested_value(obj, path):
+    keys = path.split('.')
+    for key in keys:
+        if isinstance(obj, dict):
+            obj = obj.get(key)
+        else:
+            return None
+    return obj
+
+def extract_order_ids_from_json_dynamic(json_path, mappings):
+    with open(json_path, 'r') as f:
+        data = json.load(f)
+    order_ids = set()
+    for item in data.get('results', []):
+        print('mappings',mappings)
+        for path in mappings:
+            print('path', path)
+            val = get_nested_value(item, path)
+            if val is not None:
+                order_ids.add(str(val))
+                print('OrdeIdRetrived ',str(val))
+    return list(order_ids)
+
+
+def filter_order_actv_table(spark, order_ids, req_id):
+    if not order_ids:
+        print("No OrderIds found, skipping Spark filtering.")
+        return
+    df = spark.read.jdbc(
+        url="jdbc:postgresql://localhost:5432/telusko",
+        table="ORDER_ACTV",
+        properties={"user": "postgres", "password": "1234", "driver": "org.postgresql.Driver"}
+    )
+    filtered = df.filter(col("OrderId").isin(order_ids))
+    filtered.show();
+    target_table = f"ORDER_ACTV_{req_id}"
+    filtered.write.jdbc(
+            url="jdbc:postgresql://localhost:5432/telusko",
+            table=target_table,
+            properties={"user": "postgres", "password": "1234", "driver": "org.postgresql.Driver"}
+    )
+
+
+    print(f"✅ Filtered Order_Actv written to: {target_table}")
+
+# Execute hook logic
+
     

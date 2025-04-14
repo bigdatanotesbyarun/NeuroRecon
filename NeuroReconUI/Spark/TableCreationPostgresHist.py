@@ -97,7 +97,7 @@ df = spark.createDataFrame(data, schema=schema)
 # Write to PostgreSQL
 df.write.jdbc(
     url="jdbc:postgresql://localhost:5432/telusko",
-    table="orders",
-    mode="append",
+    table="ORDER_HIST",
+    mode="overwrite",
     properties={"user": "postgres", "password": "1234", "driver": "org.postgresql.Driver"}
 )
