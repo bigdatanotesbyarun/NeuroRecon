@@ -7,7 +7,7 @@ from django.http import HttpResponse, JsonResponse
 @api_view(['GET'])
 def chart1(request):
     data = {
-        "labels": ["Product", "Party", "Account"],
+        "labels": ["Table1", "Table2", "Table3"],
         "datasets": [
             {
                 "data": [657689, 590978, 846789]
@@ -19,7 +19,7 @@ def chart1(request):
 @api_view(['GET'])
 def chart2(request):
     data = {
-       "labels": ["Product", "Party", "Account"],
+       "labels": ["Table1", "Table2", "Table3"],
         "datasets": [
             {
                 "data": [657689, 590978, 846789]
@@ -31,7 +31,7 @@ def chart2(request):
 @api_view(['GET'])
 def chart3(request):
     data = {
-        "labels": ["SMCP", "ACTI", "PARTYI"],
+        "labels": ["Region1", "Region2", "Region3"],
         "datasets": [
             {
                 "data": [657689, 590978, 846789]
@@ -43,7 +43,7 @@ def chart3(request):
 @api_view(['GET'])
 def chart4(request):
     data = {
-        "labels": ["SMCP", "ACTI", "PARTYI"],
+        "labels": ["Region1", "Region2", "Region3"],
         "datasets": [
             {
                 "data": [657689, 590978, 846789]
@@ -55,7 +55,7 @@ def chart4(request):
 @api_view(['GET'])
 def chart5(request):
     data = {
-         "labels": ["Product", "Party", "Account"],
+         "labels": ["Table1", "Table2", "Table3"],
         "datasets": [
             {
                 "data": [657689, 590978, 846789]
@@ -67,7 +67,7 @@ def chart5(request):
 @api_view(['GET'])
 def chart6(request):
     data = {
-         "labels": ["Product", "Party", "Account"],
+         "labels": ["Table1", "Table2", "Table3"],
         "datasets": [
             {
                 "data":[657689, 590978, 846789]
@@ -79,7 +79,7 @@ def chart6(request):
 @api_view(['GET'])
 def chart7(request):
     data = {
-       "labels": ["SMCP", "ACTI", "PARTYI"],
+       "labels": ["Region1", "Region2", "Region3"],
         "datasets": [
             {
                 "data": [657689, 590978, 846789]
@@ -91,7 +91,7 @@ def chart7(request):
 @api_view(['GET'])
 def chart8(request):
     data = {
-        "labels": ["SMCP", "ACTI", "PARTYI"],
+        "labels": ["Region1", "Region2", "Region3"],
         "datasets": [
             {
                 "data": [657689, 590978, 846789]
