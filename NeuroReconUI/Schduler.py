@@ -14,6 +14,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, lit, when
 from datetime import datetime
 import os
+from django.db.models import Q
 from pathlib import Path
 from django.conf import settings
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, FloatType

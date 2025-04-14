@@ -1,5 +1,6 @@
 import threading
 import time
+from django.db.models import Q
 from threading import Semaphore
 from django.db import models
 from django.apps import apps
