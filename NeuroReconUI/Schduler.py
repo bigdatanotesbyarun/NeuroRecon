@@ -104,8 +104,8 @@ def fetch_json_from_api(url, payload):
 
 def recon(reconvo):
     # Load the Excel file and sheet
-    #excel_file = 'Staging\\DataModel\\ProductDataModel.xlsx'  # Path to your uploaded Excel file
-    excel_file = os.path.join(BASE_DIR, 'Staging', 'DataModel', "ProductDataModel.xlsx")
+    #excel_file = 'Staging\\DataModel\\OrderDataModel.xlsx'  # Path to your uploaded Excel file
+    excel_file = os.path.join(BASE_DIR, 'Staging', 'DataModel', "OrderDataModel.xlsx")
     df = pd.read_excel(excel_file)
 
     # Extract the column names, mappings, and data types from the 'Destinationtype' column

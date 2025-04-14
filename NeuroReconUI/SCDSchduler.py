@@ -46,7 +46,7 @@ def process_recon_request(reconvo_id):
 
             # Simulating some processing logic
             print(f"Processing request {reconvo.reqId}...")
-            excel_file = os.path.join(BASE_DIR, 'Staging', 'DataModel', 'ProductDataModel.xlsx')
+            excel_file = os.path.join(BASE_DIR, 'Staging', 'DataModel', 'OrderDataModel.xlsx')
             path=update_json_by_excel(reconvo.filePath,excel_file,reconvo.reqId)
             
             # After processing, update status to 'Finished'
