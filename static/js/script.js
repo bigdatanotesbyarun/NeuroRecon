@@ -576,14 +576,14 @@ $(document).ready(function () {
                 
                 response.forEach(GemfireCountTable1 => {
                     let row = `<tr>
-                     <td>${GemfireCountTable1.tblName}</td>   
-                    <td>${GemfireCountTable1.name}</td>
+                        <td>${GemfireCountTable1.tblname}</td>   
+                        <td>${GemfireCountTable1.name}</td>
                         <td>${GemfireCountTable1.countDiff}</td>
                         <td>${GemfireCountTable1.hiveCount}</td>
-                         <td>${GemfireCountTable1.gemfireCount}</td>
+                        <td>${GemfireCountTable1.gemfireCount}</td>
                         <td>${GemfireCountTable1.created}</td>
-                         <td>${GemfireCountTable1.env}</td>
-                         </tr>`;
+                        <td>${GemfireCountTable1.env}</td>
+                        </tr>`;
                     tableBody.append(row);
                 });
 
