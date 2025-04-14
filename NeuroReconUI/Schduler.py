@@ -18,7 +18,6 @@ from pathlib import Path
 from django.conf import settings
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, FloatType
 
-# Max threads allowed
 MAX_THREADS = 5
 semaphore = Semaphore(MAX_THREADS)
 
@@ -106,7 +105,7 @@ def fetch_json_from_api(url, payload):
 def recon(reconvo):
     # Load the Excel file and sheet
     #excel_file = 'Staging\\DataModel\\ProductDataModel.xlsx'  # Path to your uploaded Excel file
-    excel_file = os.path.join(BASE_DIR, 'Staging', 'DataModel', 'ProductDataModel.xlsx')
+    excel_file = os.path.join(BASE_DIR, 'Staging', 'DataModel', "ProductDataModel.xlsx")
     df = pd.read_excel(excel_file)
 
     # Extract the column names, mappings, and data types from the 'Destinationtype' column
@@ -115,8 +114,7 @@ def recon(reconvo):
     data_types = df['Destinationtype'].tolist()  # Get all DataTypes from the 'Destinationtype' column
 
     # Load the JSON file (Product.json)
-    json_file = os.path.join(BASE_DIR, 'Staging', 'Incoming', 'Product','Product.json')
-   # json_file = 'Staging\\Incoming\\Product\\Product.json'  # Path to your uploaded JSON file
+    json_file = os.path.join(BASE_DIR, 'Staging', 'Incoming', 'Product',"Product4SCD2.json")
     with open(json_file, 'r') as f:
         json_data = json.load(f)
 
@@ -281,3 +279,52 @@ def recon(reconvo):
         .mode("append") \
         .save()
     print('Data Written')
+
+    if(reconvo.temporal =='TYPE2'):
+        print('Process History')
+    #     final_spark_df
+    #     from pyspark.sql import SparkSession
+    #     from pyspark.sql.functions import explode, array, col, expr, md5, concat_ws
+    #     cdcfile = os.path.join(BASE_DIR, 'Staging', '\DataModel', "ProductCDC.json")
+    #     df = spark.read.format("json").option("multiline", True).load(cdcfile)
+    #     df.printSchema()
+    #     df = df.select(explode(array(col("ProductCDC.cdc"))).alias("productcdc"))
+    #     cdc_df = df.select(explode(col("productcdc")).alias("cdc"))
+    #     fields = [row['cdc'] for row in cdc_df.collect()]
+    #     stv = "concat_ws(''," + ",".join([f"nvl(cast({field} as string), '^A')" for field in fields]) + ")"
+    #     result_df = final_spark_df.withColumn("md5_hash_key", md5(expr(stv)))
+    #     from pyspark.sql.functions import col, when
+    #     same_record_condition = (
+    #     col("active.OrderId").eqNullSafe(col("delta.OrderId")) &
+    #     col("active.md5_hash_key").eqNullSafe(col("delta.md5_hash_key")))
+    #     full = (
+    #     result_df.alias("active")  #this needs to be changed
+    #    .join(result_df.alias("delta"), col("active.OrderId").eqNullSafe(col("delta.OrderId")), "full_outer")
+    #    .withColumn(
+    #     "action",
+    #     when(col("delta.OrderId").isNotNull() & col("active.OrderId").isNull(), "insert")
+    #     .when(col("delta.OrderId").isNull() & col("active.OrderId").isNotNull(), "discard")
+    #     .when(same_record_condition, "history")
+    #     .otherwise("update")
+    #         )
+    #     )
+    #     update_records_old = full.select("active.*").where(col("action") == "update")
+    #     df2 #current history for new record
+    #     joined = update_records_old.alias("df1").join(df2.alias("df2"), on=joinKey, how="outer")
+
+    #     recon_data = []
+
+    #     for field in fields:
+    #         recon_data.append(
+    #             joined.select(
+    #                 col(joinKey).alias("JoinKey"),  # JoinKey FIRST
+    #                 lit(field).alias("FieldName"),
+    #                 col(f"df1.{field}").alias("ExpectedHist"),
+    #                 col(f"df2.{field}").alias("ActualHist"),
+    #                 when((col(f"df1.{field}") == col(f"df2.{field}"))), "Match" ).otherwise("Mismatch").alias("ReconStatus"),
+    #                 lit(reconvo.reqId).alias("RequestID")
+    #             )
+    #     final_df = recon_data[0]
+    #     for df in recon_data[1:]:
+    #         final_df = final_df.union(df)
+    #         final_df.show()        

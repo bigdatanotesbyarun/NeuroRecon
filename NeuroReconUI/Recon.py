@@ -48,9 +48,14 @@ def audit(request):
 
     spark.sparkContext.setLogLevel("ERROR")
 
+    df_actv = spark.read.jdbc(
+        url="jdbc:postgresql://localhost:5432/telusko",
+        table="ORDER_ACTV",
+        properties={"user": "postgres", "password": "1234", "driver": "org.postgresql.Driver"}
+    )
 
     df1 = spark.read.json(spark.sparkContext.parallelize([json1_data]))
-    df2 = spark.read.json(spark.sparkContext.parallelize([json2_data]))
+    df2 = df_actv; #spark.read.json(spark.sparkContext.parallelize([json2_data]))
     df3 = spark.read.json(spark.sparkContext.parallelize([json3_data]))
 
     # Step 3: Join on the key (SMCP)
