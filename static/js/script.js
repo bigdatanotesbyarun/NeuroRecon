@@ -1340,8 +1340,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             <td>${SCDVO.reqId}</td>
                             <td>${SCDVO.name}</td>
                             <td>${SCDVO.created}</td>
-                            <td><a href="#" onclick="downLoadFile('${SCDVO.filePath}')">Download :${SCDVO.filePath}</a></td>
-                            <td><a href="#" onclick="downLoadFile('${SCDVO.outputFile}')">Download :${SCDVO.outputFile}</a></td>
+                            <td><a href="#" onclick="downLoadFile('${SCDVO.filePath}')">Download Input</a></td>
+                            <td><a href="#" onclick="downLoadFile('${SCDVO.outputFile}')">Download SCD2</a></td>
                             <td style="color: ${statusColor}; font-weight: bold;">${SCDVO.status}</td>
                             </tr>`;
                         tableBody.append(row);
