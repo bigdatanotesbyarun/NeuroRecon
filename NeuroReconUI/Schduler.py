@@ -114,7 +114,7 @@ def recon(reconvo):
     data_types = df['Destinationtype'].tolist()  # Get all DataTypes from the 'Destinationtype' column
 
     # Load the JSON file (Product.json)
-    json_file = os.path.join(BASE_DIR, 'Staging', 'Incoming', 'Product',"Product4SCD2.json")
+    json_file = os.path.join(BASE_DIR, 'Staging', 'Incoming', 'Order',"Order.json")
     with open(json_file, 'r') as f:
         json_data = json.load(f)
 
