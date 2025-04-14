@@ -66,7 +66,7 @@ def monitor_and_process_requests():
         ReconVO = apps.get_model('NeuroReconUI', 'ReconVO')
 
         # Fetch the ReconVO requests that are InProgress and have EOD batch
-        reconvos = ReconVO.objects.filter(~Q(field6="InProgress"), batch="EOD")
+        reconvos = ReconVO.objects.filter(~Q(field6="Finished"), batch="EOD")
 
         if reconvos:
             for reconvo in reconvos:
