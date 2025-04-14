@@ -73,7 +73,7 @@ def update_json_by_excel(json_path, excel_path, output_path=None):
 if __name__ == "__main__":
     jar_dir = os.path.join(os.getcwd(), "Staging", "Incoming", "Product")
     json_file = os.path.join(jar_dir, 'Product.json')
-    excel_file = 'F:\\ReconProjects\\NeuroRecon\\Staging\\DataModel\\ProductDataModel.xlsx'
+    excel_file = 'F:\\ReconProjects\\NeuroRecon\\Staging\\DataModel\\OrderDataModel.xlsx'
 
     updated_file = update_json_by_excel(json_file, excel_file)
     print(f"✅ Updated JSON written to: {updated_file}")
