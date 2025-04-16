@@ -9,6 +9,7 @@ from django.core.management import call_command
 from django.utils import timezone
 import pandas as pd
 import json
+from django.db import transaction
 import requests
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, lit, when
@@ -19,7 +20,7 @@ from pathlib import Path
 from django.conf import settings
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, FloatType
 
-MAX_THREADS = 5
+MAX_THREADS = 1
 semaphore = Semaphore(MAX_THREADS)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,17 +28,26 @@ def process_recon_request(reconvo_id):
     try:
         semaphore.acquire()
         ReconVO = apps.get_model('NeuroReconUI', 'ReconVO')
-        reconvo = ReconVO.objects.get(id=reconvo_id)
 
-        if reconvo.field6 != 'Finished' and reconvo.batch == 'EOD':
-            reconvo.field6 = 'Running'
-            reconvo.save()
-            print(f"Processing request {reconvo.reqId}...")
-            recon(reconvo)
+        with transaction.atomic():
+            reconvo = ReconVO.objects.select_for_update().get(id=reconvo_id)
+
+            if reconvo.field6 != 'Finished' and reconvo.batch == 'EOD':
+                reconvo.field6 = 'Running'
+                reconvo.save()
+
+        
+        print(f"Started request {reconvo.reqId}")
+        # Call recon outside the lock to keep lock duration short
+        recon(reconvo)
+
+        with transaction.atomic():
+            reconvo = ReconVO.objects.get(id=reconvo_id)
             reconvo.field6 = 'Finished'
             reconvo.save()
-            print(f"Finished processing request {reconvo.reqId}")
-        
+
+        print(f"Finished processing request {reconvo.reqId}")
+    
     finally:
         semaphore.release()
 
@@ -50,7 +60,7 @@ def monitor_and_process_requests():
                 thread = threading.Thread(target=process_recon_request, args=(reconvo.id,))
                 thread.start()
 
-        time.sleep(10)  
+        time.sleep(1)  
 
 def start_monitoring():
     monitoring_thread = threading.Thread(target=monitor_and_process_requests)
@@ -127,6 +137,27 @@ def recon(reconvo):
     jarf = os.path.join(BASE_DIR, 'Jars', 'postgresql-42.7.5.jar')
     spark = SparkSession.builder.appName('JsonComparison').master('local[*]').config("spark.jars",jarf).enableHiveSupport().getOrCreate()
     final_spark_df = spark.createDataFrame(final_dataset, schema)
+   
+   
+   
+    env = 'LOCAL'
+    #settings.ENV
+
+    if env == 'LOCAL':
+        base_url = "http://localhost:8000"
+        print("In Local Environment")
+    else:
+        base_url = "http://13.48.57.113:8000"
+        print("In Development Environment")
+
+
+    # Define API URLs
+    url_json1 = f"{base_url}/get_kafka_data/"
+    url_json2 = f"{base_url}/get_impala_data/"
+    url_json3 = f"{base_url}/get_gemfire_data/"
+   
+   
+   
     url_json1 = f"{base_url}/get_kafka_data/"
     url_json2 = f"{base_url}/get_impala_data/"
     url_json3 = f"{base_url}/get_gemfire_data/"
@@ -135,12 +166,12 @@ def recon(reconvo):
         "key": "value"
     }
 
-    json1_data = fetch_json_from_api(url_json1, payload)
+    #json1_data = fetch_json_from_api(url_json1, payload)
     json2_data = fetch_json_from_api(url_json2, payload)
     json3_data = fetch_json_from_api(url_json3, payload)
     spark.sparkContext.setLogLevel("ERROR")
 
-    df1 = spark.read.json(spark.sparkContext.parallelize([json1_data]))
+    #df1 = spark.read.json(spark.sparkContext.parallelize([json1_data]))
     df2 = spark.read.json(spark.sparkContext.parallelize([json2_data]))
     df3 = spark.read.json(spark.sparkContext.parallelize([json3_data]))
 
@@ -159,26 +190,25 @@ def recon(reconvo):
     for field in fields:
         recon_data.append(
             joined.select(
-                col(joinKey).alias("JoinKey"),  
-                lit(field).alias("FieldName"),
+                col(joinKey).alias("JoinKey"),lit(field).alias("FieldName"),
                 col(f"df1.{field}").alias("Kafka"),
                 col(f"df2.{field}").alias("Impala"),
                 col(f"df3.{field}").alias("Gemfire"),
-                when(
-                    (col(f"df1.{field}") == col(f"df2.{field}")) &
-                    (col(f"df2.{field}") == col(f"df3.{field}")),
-                    "Match"
-                ).otherwise("Mismatch").alias("ReconStatus"),
+                when((col(f"df1.{field}") == col(f"df2.{field}")) & (col(f"df2.{field}") == col(f"df3.{field}")),"Match")
+                .otherwise("Mismatch").alias("ReconStatus"),
                 lit(reconvo.reqId).alias("RequestID")
             )
         )
 
     final_df = recon_data[0]
+    print('1')
+    final_df.show()
     for df in recon_data[1:]:
         final_df = final_df.union(df)
 
-    final_df.show(truncate=False)
-    final_df = final_df.withColumn("env", lit("Prod"))
+        print('2')
+        final_df.show(truncate=False)
+        final_df = final_df.withColumn("env", lit("Prod"))
 
     DATABASE_NAME = settings.DATABASES['default']['NAME']  
     DATABASE_USER = settings.DATABASES['default']['USER']  
