@@ -119,7 +119,7 @@ def get_recon_data(request):
 
 @api_view(['GET'])
 def get_scd_data(request):
-        recon=SCDVO.objects.all()
+        recon=SCDVO.objects.all().order_by('status')
         serializer=SCDSerializer(recon,many=True)
         return Response(serializer.data);
 
@@ -158,9 +158,9 @@ def get_recon_result(request, req_id=None):
     """
     try:
         if req_id:
-            recon = ReconResult.objects.filter(RequestID=req_id).order_by('JoinKey')  # Filter by the provided reqId
+            recon = ReconResult.objects.filter(RequestID=req_id).order_by('JoinKey').order_by('ReconStatus').reverse()  # Filter by the provided reqId
         else:
-            recon = ReconResult.objects.all().order_by('JoinKey')  # If no reqId is provided, return all results
+            recon = ReconResult.objects.all().order_by('JoinKey').order_by('ReconStatus').reverse()  # If no reqId is provided, return all results
 
         if not recon.exists():
             return Response({'message': 'No data found for the provided reqId.'}, status=200)

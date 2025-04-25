@@ -40,7 +40,7 @@ def process_recon_request(reconvo_id):
         # Fetch the request based on ReconVO ID
         reconvo = SCDVO.objects.get(id=reconvo_id)
 
-        if reconvo.status != 'Finished':
+        if reconvo.status == 'InProgress':
             # Update status to 'Running' before processing
             reconvo.status = 'Running'
             reconvo.save()
@@ -70,7 +70,7 @@ def monitor_and_process_requests():
         SCDVO = apps.get_model('NeuroReconUI', 'SCDVO')
 
         # Fetch the ReconVO requests that are InProgress and have EOD batch
-        reconvos = SCDVO.objects.filter(~Q(status="Finished"))
+        reconvos = SCDVO.objects.filter(status="InProgress")
 
         if reconvos:
             for reconvo in reconvos:

@@ -240,6 +240,7 @@
         <div id="chat-container" class="chat-container hide">
             <div class="chat-header">
                 <span>ReferenceData</span>
+                <button class="seg-btn"  data-value="WEB">WEB</button>
                 <button class="seg-btn"  data-value="EXCEL">EXCEL</button>
                 <button class="seg-btn" data-value="PDF">PDF</button>
                 <button class="seg-btn" data-value="JSON">JSON</button>
@@ -689,8 +690,8 @@
 
             <div id="requestTable" style="display: none;" class="hide">
                 <p style="font-size: 16px; font-weight: bold; text-align: center;color: #2c3e50; margin-bottom: 20px;">ReconData</p>
-                <button class="seg-btn" id="actv" data-value="ACTV">ACTV</button>
-                <button class="seg-btn" id="hist" data-value="HIST">HIST</button>
+                <!-- <button class="seg-btn" id="actv" data-value="ACTV">ACTV</button>
+                <button class="seg-btn" id="hist" data-value="HIST">HIST</button> -->
                 <div class="table-container">
                     <table id="requestDataTable" class="display">
                         <thead>
@@ -726,17 +727,37 @@
                                         <thead>
                                             <tr>
                                                 <th>ReqID
-                                                        <i id="filterReqID" class="fa fa-filter" style="cursor: pointer; margin-left: 10px;"></i>
-                                                        <input id="filterReqIDInput" type="text" placeholder="Filter Attribute" style="display:none; margin-left: 10px;">
+                                                        <!-- <i id="filterReqID" class="fa fa-filter" style="cursor: pointer; margin-left: 10px;"></i>
+                                                        <input id="filterReqIDInput" type="text" placeholder="Filter Attribute" style="display:none; margin-left: 10px;"> -->
                                                 </th>
                                                 <th>CreatedBy</th>
-                                                <th>Date</th>
+                                                <th>CreatedDate</th>
                                                 <th>Table</th>
                                                 <th>Flow</th>
                                                 <th>Temporal</th>
                                                 <th>Batch</th>
                                                 <th>Env</th>
                                                 <th>Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>   <i id="filterReqID" class="fa fa-filter" style="cursor: pointer; margin-left: 10px;"></i> <input id="filterReqIDInput" type="text" placeholder="Filter Attribute" style="display:none; margin-left: 10px;">
+                                                </th>
+                                                <th>   <i id="filterReqID" class="fa fa-filter" style="cursor: pointer; margin-left: 10px;"></i><input id="filterReqIDInput" type="text" placeholder="Filter Attribute" style="display:none; margin-left: 10px;">
+                                                </th>
+                                                <th>   <i id="filterReqID" class="fa fa-filter" style="cursor: pointer; margin-left: 10px;"></i> <input id="filterReqIDInput" type="text" placeholder="Filter Attribute" style="display:none; margin-left: 10px;">
+                                                </th>
+                                                <th>  <i id="filterReqID" class="fa fa-filter" style="cursor: pointer; margin-left: 10px;"></i><input id="filterReqIDInput" type="text" placeholder="Filter Attribute" style="display:none; margin-left: 10px;">
+                                                </th>
+                                                <th>   <i id="filterReqID" class="fa fa-filter" style="cursor: pointer; margin-left: 10px;"></i><input id="filterReqIDInput" type="text" placeholder="Filter Attribute" style="display:none; margin-left: 10px;">
+                                                </th>
+                                                <th>   <i id="filterReqID" class="fa fa-filter" style="cursor: pointer; margin-left: 10px;"></i><input id="filterReqIDInput" type="text" placeholder="Filter Attribute" style="display:none; margin-left: 10px;">
+                                                </th>
+                                                <th>   <i id="filterReqID" class="fa fa-filter" style="cursor: pointer; margin-left: 10px;"></i><input id="filterReqIDInput" type="text" placeholder="Filter Attribute" style="display:none; margin-left: 10px;">
+                                                </th>
+                                                <th>   <i id="filterReqID" class="fa fa-filter" style="cursor: pointer; margin-left: 10px;"></i><input id="filterReqIDInput" type="text" placeholder="Filter Attribute" style="display:none; margin-left: 10px;">
+                                                </th>
+                                                <th>  <i id="filterReqID" class="fa fa-filter" style="cursor: pointer; margin-left: 10px;"></i>  <input id="filterReqIDInput" type="text" placeholder="Filter Attribute" style="display:none; margin-left: 10px;">
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>

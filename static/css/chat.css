@@ -78,7 +78,7 @@
 
     /* Bot Message (Left-Aligned) */
     .bot-message {
-    background-color: #007bff;
+    background-color: #34495e;
     color: white;
     align-self: flex-start;
     }

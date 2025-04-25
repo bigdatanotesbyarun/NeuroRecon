@@ -20,7 +20,8 @@
 #requestDataTable2 th {
     background-color: #2c3e50;
     color: white;
-    font-size: 13px;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
 }
 
 #requestDataTable2 tbody tr:hover {
@@ -29,14 +30,17 @@
 
 #requestDataTable2 td {
     color: #333;
-    font-size: 12px;
+    font-family: 'Arial', sans-serif;
+    font-size: 13px;
+    padding: 5px 5px;
 }
 
 /* Responsive Design for Data Table */
 @media (max-width: 768px) {
     #requestDataTable2 th, #requestDataTable2 td {
         padding: 8px;
-        font-size: 12px;
+        font-family: 'Arial', sans-serif;
+        font-size: 14px;
     }
 }
     
@@ -55,7 +59,8 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
         }
 
         body {

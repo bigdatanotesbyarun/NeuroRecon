@@ -29,7 +29,10 @@
 
 #scdDatarecon td {
     color: #333;
-    font-size: 12px;
+    font-size: 13px;
+    padding: 5px 5px;
+  
+
 }
 
 /* Responsive Design for Data Table */

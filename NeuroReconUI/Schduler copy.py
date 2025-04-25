@@ -32,10 +32,8 @@ def process_recon_request(reconvo_id):
         with transaction.atomic():
             reconvo = ReconVO.objects.select_for_update().get(id=reconvo_id)
 
-            if reconvo.field6 != 'Finished' and reconvo.batch == 'EOD':
-                reconvo.field6 = 'Running'
-                reconvo.save()
-
+            if reconvo.field6 == 'InProgress' and reconvo.batch == 'EOD':
+              
         
         print(f"Started request {reconvo.reqId}")
         # Call recon outside the lock to keep lock duration short
@@ -54,15 +52,15 @@ def process_recon_request(reconvo_id):
 def monitor_and_process_requests():
     while True:
         ReconVO = apps.get_model('NeuroReconUI', 'ReconVO')
-        reconvos = ReconVO.objects.filter(~Q(field6="Finished"), batch="EOD")
+        #reconvos = ReconVO.objects.filter(~Q(field6="Finished"), batch="EOD")
+        reconvos = ReconVO.objects.filter(field6="InProgress", batch="EOD")
         if reconvos:
             for reconvo in reconvos:
                 thread = threading.Thread(target=process_recon_request, args=(reconvo.id,))
                 reconvo.field6 = 'Running'
                 reconvo.save()
                 thread.start()
-
-        time.sleep(100)  
+                time.sleep(120)  
 
 def start_monitoring():
     monitoring_thread = threading.Thread(target=monitor_and_process_requests)
@@ -189,49 +187,38 @@ def recon(reconvo):
 
     recon_data = []
 
-    # Perform column-wise comparison for CDC fields
     for field in fields:
         recon_data.append(
             joined.select(
-                col(joinKey).alias("JoinKey"),  # JoinKey FIRST
-                lit(field).alias("FieldName"),
+                col(joinKey).alias("JoinKey"),lit(field).alias("FieldName"),
                 col(f"df1.{field}").alias("Kafka"),
                 col(f"df2.{field}").alias("Impala"),
                 col(f"df3.{field}").alias("Gemfire"),
-                when(
-                    (col(f"df1.{field}") == col(f"df2.{field}")) &
-                    (col(f"df2.{field}") == col(f"df3.{field}")),
-                    "Match"
-                ).otherwise("Mismatch").alias("ReconStatus"),
+                when((col(f"df1.{field}") == col(f"df2.{field}")) & (col(f"df2.{field}") == col(f"df3.{field}")),"Match")
+                .otherwise("Mismatch").alias("ReconStatus"),
                 lit(reconvo.reqId).alias("RequestID")
             )
         )
 
-    # Step 6: Union all comparisons
     final_df = recon_data[0]
+    print('1')
+    final_df.show()
     for df in recon_data[1:]:
         final_df = final_df.union(df)
 
-    # Step 7: Show output
-    final_df.show(truncate=False)
-    final_df = final_df.withColumn("env", lit("prod"))
+        print('2')
+        final_df.show(truncate=False)
+        final_df = final_df.withColumn("env", lit("Prod"))
 
-    # # Step 8: Write the results to a PostgreSQL database
-    DATABASE_NAME = settings.DATABASES['default']['NAME']  # 'NAME' is the database name
-    DATABASE_USER = settings.DATABASES['default']['USER']  # 'USER' is the username
-    DATABASE_PASSWORD = settings.DATABASES['default']['PASSWORD']  # 'PASSWORD' is the password
-    DATABASE_HOST = settings.DATABASES['default']['HOST']  # 'HOST' is the host, e.g., 'localhost'
-
-    # Define JDBC URL for PostgreSQL
-    #jdbc_url = f"jdbc:postgresql://{DATABASE_HOST}:5432/{DATABASE_NAME}"
-    #jdbc_url = "jdbc:postgresql://localhost:5432/telusko"
-    # Write the DataFrame to PostgreSQL
+    DATABASE_NAME = settings.DATABASES['default']['NAME']  
+    DATABASE_USER = settings.DATABASES['default']['USER']  
+    DATABASE_PASSWORD = settings.DATABASES['default']['PASSWORD'] 
+    DATABASE_HOST = settings.DATABASES['default']['HOST'] 
     jdbc_url = f"jdbc:postgresql://{DATABASE_HOST}:5432/{DATABASE_NAME}"
-
     final_df.write \
         .format("jdbc") \
         .option("url", jdbc_url) \
-        .option("dbtable", "neuroreconui_reconresult") \
+        .option("dbtable", "NEURORECONUI_RECONRESULT") \
         .option("user", DATABASE_USER) \
         .option("password", DATABASE_PASSWORD) \
         .option("driver", "org.postgresql.Driver") \

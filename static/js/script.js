@@ -454,7 +454,7 @@ $(document).ready(function () {
                     let row = `<tr>
                         <td><a href="#" onclick="showRequestData2('${ReconVO.reqId}')">${ReconVO.reqId}</a></td>
                         <td>${ReconVO.name}</td>
-                        <td>${ReconVO.created}</td>
+                        <td>${ReconVO.created.split('.')[0]}</td>
                         <td>${ReconVO.tblName}</td>
                         <td>${ReconVO.pipeline}</td>
                         <td>${ReconVO.temporal}</td>

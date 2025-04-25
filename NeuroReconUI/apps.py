@@ -8,5 +8,5 @@ class NeuroreconuiConfig(AppConfig):
     def ready(self):
          from .Schduler import start_monitoring
          start_monitoring()  # Start the monitoring when the app is ready
-       # from .SCDSchduler import start_scdmonitoring
-       # start_scdmonitoring()  # Start the monitoring when the app is ready
+         from .SCDSchduler import start_scdmonitoring
+         start_scdmonitoring()  # Start the monitoring when the app is ready

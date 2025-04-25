@@ -1,6 +1,5 @@
 from django.urls import path
-from . import ChatExcel,views,Chat,ClientServices,Chart,ChatDB,Recon,FileUpload
-
+from . import ChatExcel,views,Chat,ClientServices,Chart,ChatDB,Recon,FileUpload,ChatWeb
 
 urlpatterns = [
     path('home/', views.home,name="home"),
@@ -23,6 +22,7 @@ urlpatterns = [
     path('get_jobs_data/', views.get_jobs_data, name='get_jobs_data'),
     path('get_chat_dataPDF/', Chat.get_chat_dataPDF, name='get_chat_dataPDF'),
     path('get_chat_dataEXCEL/', ChatExcel.get_chat_dataEXCEL, name='get_chat_dataEXCEL'),
+    path('get_chat_dataWEB/', ChatWeb.get_chat_dataWEB, name='get_chat_dataWEB'),
     path('get_data_from_natural_language_query/',ChatDB.get_data_from_natural_language_query, name='get_data_from_natural_language_query'),
     path('get_cloud_data/', ClientServices.get_cloud_data, name='get_cloud_data'),
     path('get_kafka_data/', ClientServices.get_kafka_data, name='get_kafka_data'),

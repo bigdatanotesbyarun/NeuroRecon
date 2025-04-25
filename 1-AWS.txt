@@ -19,6 +19,7 @@ pip install openpyxl
 pip install django-environ
 pip install openpyxl
 pip install pandas
+pip install google-search-results
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '51.21.161.68']
 python manage.py  createsuperuser
@@ -28,7 +29,7 @@ python manage.py  runserver 0.0.0.0:8000 [So That It Can allow AnyHost to Connec
 AWS   		User-Arun.gupta46@gmail.com		  Password-Aarna@2025
 Admin 		User- admin                       Password-admin
 Postgre     User-Neuroadmin                   Password-Neuroadmin
-AdminLocal		User- admin                       Password-1234
+AdminLocal		User- admin                   Password-1234
 
 
 

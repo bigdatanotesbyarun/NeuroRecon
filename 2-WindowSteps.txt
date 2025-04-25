@@ -40,6 +40,7 @@ pip install requests
 pip install django-environ
 pip install openpyxl	
 pip install pandas
+pip install google-search-results
 				       
 #Set Below Path in ENV Varible#
 
